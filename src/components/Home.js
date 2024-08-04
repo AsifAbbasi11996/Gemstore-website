@@ -7,6 +7,7 @@ import gemstone from "../assets/images/gemstone.webp";
 import rudraksh from "../assets/images/rudraksh.webp";
 import bracelet from "../assets/images/bracelet.avif";
 import trees from "../assets/images/trees.webp";
+import rakhi from "../assets/images/rakhi2.webp";
 import c_img1 from "../assets/images/c_img1.webp";
 import c_img2 from "../assets/images/c_img2.jpg";
 import img1 from "../assets/images/img1.webp";
@@ -33,31 +34,31 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(nextSlide, 3000); 
+    const intervalId = setInterval(nextSlide, 3000);
 
-   
+
     return () => clearInterval(intervalId);
   }, []);
 
   return (
     <>
       <div className="home_container">
-      <div className="slider-container">
-      <div className="slider">
-        <button className="prev" onClick={prevSlide}>❮</button>
-        <img src={images[currentIndex]} alt={`Slide ${currentIndex}`} className="slider-image" />
-        <button className="next" onClick={nextSlide}>❯</button>
-      </div>
-      <div className="indicators">
-        {images.map((_, index) => (
-          <span
-            key={index}
-            className={`indicator ${index === currentIndex ? 'active' : ''}`}
-            onClick={() => setCurrentIndex(index)}
-          />
-        ))}
-      </div>
-    </div>
+        <div className="slider-container">
+          <div className="slider">
+            <button className="prev" onClick={prevSlide}>❮</button>
+            <img src={images[currentIndex]} alt={`Slide ${currentIndex}`} className="slider-image" />
+            <button className="next" onClick={nextSlide}>❯</button>
+          </div>
+          <div className="indicators">
+            {images.map((_, index) => (
+              <span
+                key={index}
+                className={`indicator ${index === currentIndex ? 'active' : ''}`}
+                onClick={() => setCurrentIndex(index)}
+              />
+            ))}
+          </div>
+        </div>
 
         <div className="content">
           <h1>Find your product</h1>
@@ -90,6 +91,12 @@ const Home = () => {
               <div className="gem border">
                 <img src={gemstone} />
                 <p>Gifts</p>
+              </div>
+            </Link>
+            <Link to="/rakhi">
+              <div className="rakhi border">
+                <img src={rakhi} />
+                <p>Rakhi</p>
               </div>
             </Link>
           </div>

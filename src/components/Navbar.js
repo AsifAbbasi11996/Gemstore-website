@@ -350,13 +350,13 @@ const Navbar = () => {
               </div>
             </div>
           </Link>
-          <Link to="/trees" onClick={() => handleNavigation("/trees")}>
+          <Link to="/trees" onClick={() => handleNavigation("/trees")} className="nav-item">
             Trees
           </Link>
-          <Link to="/gifts" onClick={() => handleNavigation("/gifts")}>
+          <Link to="/gifts" onClick={() => handleNavigation("/gifts")} className="nav-item">
             Gifts
           </Link>
-          <Link to="/rakhi" onClick={() => handleNavigation("/rakhi")}>
+          <Link to="/rakhi" onClick={() => handleNavigation("/rakhi")} className="nav-item">
             Rakhi
           </Link>
         </div>

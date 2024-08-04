@@ -205,13 +205,11 @@
     }
   
     .collection {
-      margin: 40px;
+      margin: 60px;
       display: flex;
       align-items: center;
       justify-content: space-around;
       gap: 28%;
-      position: relative;
-      z-index: -1;
   
       .images {
         display: flex;

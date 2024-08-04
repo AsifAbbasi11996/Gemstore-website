@@ -24,8 +24,6 @@
   
   .video-card_container {
     margin: 20px 0;
-    position: relative;
-    z-index: -1;
   
     .video-cards {
       display: flex;
