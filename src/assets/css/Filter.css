@@ -1,0 +1,58 @@
+.filter_container {
+    padding: 10px;
+    background-color: rgb(230, 229, 229);
+    color: black;
+    height: auto;
+  
+    p,
+    label {
+      margin: 5px 0;
+    }
+  
+    .price,
+    .alphabetically {
+      display: flex;
+      align-items: center;
+    }
+  
+    input {
+      margin-right: 7px;
+      cursor: pointer;
+    }
+  
+    input[type="text"] {
+      padding: 5px 10px;
+      text-align: right;
+    }
+  
+    .price-range {
+      margin: 10px 0;
+    }
+  
+    button {
+      border: none;
+      padding: 10px 15px;
+      margin-top: 10px;
+      color: white;
+      background-color: rgb(78, 78, 243);
+      cursor: pointer;
+    }
+  }
+  
+  @media only screen and (min-width: 120px) and (max-width: 1023px) {
+    .filter_container {
+      height: 100%;
+      p {
+        font-size: 14px;
+      }
+  
+      label {
+        font-size: 13px;
+      }
+  
+      button {
+        font-size: 14px !important;
+      }
+    }
+  }
+  

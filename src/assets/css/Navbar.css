@@ -1,0 +1,207 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7a7a7a;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgb(2, 2, 78);
+  padding: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  .logo {
+    a {
+      text-decoration: none;
+      color: white;
+
+      h1{
+        font-size: 24px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .nav,
+  .user {
+    display: flex;
+    gap: 3rem;
+
+    .nav-item:hover {
+      color: #7a7a7a;
+    }
+
+    a:hover .dropdowns {
+      display: flex;
+      gap: 2rem;
+      background: rgb(226, 229, 243);
+      position: absolute;
+      top: 42px;
+      padding: 20px 10px;
+      height: 300px;
+    }
+
+    a:hover .dropdowns2{
+      left: 27%;
+    }
+    a:hover .dropdowns3{
+      left: 27%;
+    }
+
+    a {
+      text-decoration: none;
+      color: white;
+      text-transform: uppercase;
+
+      i {
+        font-size: 20px;
+      }
+
+      .dropdowns {
+        display: none;
+
+        .dropdown1,
+        .dropdown2,
+        .dropdown3 {
+          .head_text {
+            text-transform: uppercase;
+            color: black;
+            border-bottom: 2px solid black;
+            padding-bottom: 5px;
+          }
+
+          ul {
+            height: 250px;
+            overflow-y: scroll;
+            margin: 20px 0;
+
+            li {
+              list-style-type: none;
+              text-transform: uppercase;
+              color: black;
+              margin: 10px 5px;
+
+              a {
+                text-transform: none;
+                color: black;
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+
+      .dropdowns3{
+        padding: 0 10px !important;
+
+        ul {
+          margin: 0 !important;
+        }
+      }
+    }
+  }
+
+  .user {
+    gap: 1.5rem;
+  }
+
+  .hamburger {
+    display: none;
+  }
+}
+
+.search-bar-container {
+  background-color: rgb(2, 2, 78);
+  border-top: 0.5px solid rgb(163, 163, 163);
+  position: sticky;
+  top: 50px;
+
+  input {
+    width: 100%;
+    border: none;
+    padding: 10px;
+    font-size: large;
+    background-color: rgb(2, 2, 78);
+    color: white;
+  }
+
+  input:focus {
+    outline: none;
+  }
+}
+
+@media only screen and (min-width: 120px) and (max-width: 1000px) {
+  .navbar {
+    height: 40px;
+
+    .hamburger {
+      display: block;
+
+      i {
+        font-size: 24px;
+        color: white;
+      }
+    }
+
+    .logo{
+      a{
+        h1{
+          font-size: 22px;
+        }
+      }
+    }
+
+    .nav {
+      flex-direction: column;
+      gap: 1rem;
+      position: absolute;
+      left: -100%;
+      top: 60px;
+      height: 100vh;
+      background-color: #fff;
+      padding: 20px 0 0 40px;
+      width: 40%;
+
+      a {
+        color: black;
+        padding: 5px 0;
+      }
+
+      a:hover .dropdowns {
+        display: none;
+      }
+    }
+
+    .nav.active {
+      left: 0;
+    }
+  }
+
+  .search-bar-container{
+    top: 60px;
+  }
+}

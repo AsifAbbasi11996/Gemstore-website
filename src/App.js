@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import "remixicon/fonts/remixicon.css";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import Product from "./components/Product";
+import AddtoCart from "./components/AddtoCart";
+import Footer from "./components/Footer";
+import Gemstone from "./components/Gemstone.js";
+import Buynow from "./components/Buynow.js";
+import Address from "./components/Address";
+import Payment from "./components/Payment";
+import Address2 from "./components/Address2";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/product" element={<Product />} />
+        <Route path="/addtocart" element={<AddtoCart />} />
+        <Route path="/gemstone" element={<Gemstone />} />
+        <Route path="/buynow" element={<Buynow />} />
+        <Route path="/address" element={<Address />} />
+        <Route path="/address2" element={<Address2 />} />
+        <Route path="/payment" element={<Payment />} />
+      </Routes>
+      <Footer />
+    </>
   );
 }
 

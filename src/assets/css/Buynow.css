@@ -1,0 +1,200 @@
+.summary_container {
+    width: 700px;
+    height: 100%;
+    box-shadow: 0px 4px 3px #626262;
+    border-radius: 10px;
+    margin: 50px auto;
+
+
+    .nav {
+        display: flex;
+        padding: 5px 20px;
+        align-items: center;
+        justify-content: space-between;
+        background-color: rgb(63, 103, 214);
+        border-radius: 10px 10px 0 0;
+
+        .logo {
+            h2 {
+                color: white;
+                font-weight: 500;
+            }
+        }
+
+        .close {
+            cursor: pointer;
+
+            i {
+                font-size: 24px;
+                color: white;
+            }
+        }
+    }
+
+    .summary {
+        padding: 0 20px;
+        display: flex;
+        gap: 2rem;
+
+        .left {
+            width: 50%;
+
+            .top {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin: 10px 0;
+
+                p {
+                    font-weight: 500;
+                }
+
+                .blue {
+                    color: rgb(67, 67, 250);
+                }
+
+                span {
+                    margin-left: 5px;
+                }
+            }
+
+            .contact_details {
+                margin-top: 25px;
+
+                .user {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    margin: 10px 0;
+
+                    i {
+                        border-radius: 50%;
+                        background-color: #e7e5e5;
+                        font-weight: 500;
+                        font-size: 20px;
+                        padding: 5px;
+                    }
+
+                    p {
+                        font-weight: 500;
+                    }
+                }
+
+                .input {
+                    display: flex;
+                    flex-direction: column;
+                    margin: 10px 0;
+
+                    label {
+                        font-size: 14px;
+                        margin-bottom: 5px;
+                    }
+
+                    input {
+                        width: 75%;
+                        margin: 5px 0;
+                        padding: 10px 15px;
+                        font-size: 14px;
+                        border-radius: 5px;
+                        border: 1px solid rgb(161, 161, 161);
+                    }
+
+                    input:focus {
+                        outline: none;
+                    }
+
+                    .error-message {
+                        font-size: 12px;
+                        font-weight: 500;
+                        color: red;
+                    }
+                }
+
+                button {
+                    font-size: 16px;
+                    background-color: rgb(67, 67, 250);
+                    color: white;
+                    border: none;
+                    border-radius: 10px;
+                    padding: 7px 15px;
+                    margin: 10px 0;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .right {
+            width: 50%;
+
+            h2 {
+                font-size: 16px;
+                margin: 10px 0;
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: 20px;
+            }
+
+            .product {
+                display: flex;
+                gap: 15px;
+                margin: 20px 0;
+
+                img {
+                    height: 50px;
+                    width: 50px;
+                    background-color: rgb(192, 192, 192);
+                    object-fit: cover;
+                }
+
+                p {
+                    font-size: 12px;
+                }
+            }
+
+            .price {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                p {
+                    font-weight: 500;
+                }
+            }
+
+        }
+    }
+}
+
+@media only screen and (min-width:120px) and (max-width:750px) {
+    .summary_container {
+        width: 90%;
+        height: auto;
+
+        .nav{
+            padding: 10px 20px;
+
+            .logo{
+
+                h2{
+                    font-size: 18px;
+                }
+            }
+        }
+
+        .summary {
+            flex-direction: column;
+            gap: 1rem;
+
+            .left {
+                width: 100%;
+
+               
+            }
+
+            .right {
+                width: 100%;
+                margin-bottom: 60px;
+            }
+        }
+    }
+}
