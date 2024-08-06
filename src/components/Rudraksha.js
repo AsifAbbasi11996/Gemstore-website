@@ -10,6 +10,7 @@ const Rudraksha = () => {
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [data, setData] = useState([]);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -18,6 +19,30 @@ const Rudraksha = () => {
   const handleClose = () => {
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('https://gemstore-backend.onrender.com/api/rudraksha/all', {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json'
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const resData = await res.json();
+        setData(resData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } 
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <div className="gemstone_container">
@@ -41,102 +66,20 @@ const Rudraksha = () => {
             </button>
           </div>
           <div className="products">
-            <Link to="/product">
-              <div className="card">
-                <img src="" />
-                <div className="details">
-                  <p>Pukhraj - Yellow Sapphire (5.98 Ratti)</p>
-                  <p>Price </p>
-                  <Link to="/addtocart">
-                    <button>Add to cart</button>
-                  </Link>
+            {data.map((res) => (
+              <Link to={`/product/${res._id}`} key={res._id} state={{ product: res }}>
+                <div className="card">
+                  <img src={res.Images[0]} alt={res.Name} />
+                  <div className="details">
+                    <p>{res.Name}</p>
+                    <p>Price: ₹{res.Mrp}</p>
+                    <Link to="/addtocart">
+                      <button>Add to cart</button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </Link>
-            <Link to="/product">
-              <div className="card">
-                <img src="" />
-                <div className="details">
-                  <p>Pukhraj - Yellow Sapphire (5.98 Ratti)</p>
-                  <p>Price </p>
-                  <Link to="/addtocart">
-                    <button>Add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
-            <Link to="/product">
-              <div className="card">
-                <img src="" />
-                <div className="details">
-                  <p>Pukhraj - Yellow Sapphire (5.98 Ratti)</p>
-                  <p>Price </p>
-                  <Link to="/addtocart">
-                    <button>Add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
-            <Link to="/product">
-              <div className="card">
-                <img src="" />
-                <div className="details">
-                  <p>Pukhraj - Yellow Sapphire (5.98 Ratti)</p>
-                  <p>Price </p>
-                  <Link to="/addtocart">
-                    <button>Add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
-            <Link to="/product">
-              <div className="card">
-                <img src="" />
-                <div className="details">
-                  <p>Pukhraj - Yellow Sapphire (5.98 Ratti)</p>
-                  <p>Price </p>
-                  <Link to="/addtocart">
-                    <button>Add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
-            <Link to="/product">
-              <div className="card">
-                <img src="" />
-                <div className="details">
-                  <p>Pukhraj - Yellow Sapphire (5.98 Ratti)</p>
-                  <p>Price </p>
-                  <Link to="/addtocart">
-                    <button>Add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
-            <Link to="/product">
-              <div className="card">
-                <img src="" />
-                <div className="details">
-                  <p>Pukhraj - Yellow Sapphire (5.98 Ratti)</p>
-                  <p>Price </p>
-                  <Link to="/addtocart">
-                    <button>Add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
-            <Link to="/product">
-              <div className="card">
-                <img src="" />
-                <div className="details">
-                  <p>Pukhraj - Yellow Sapphire (5.98 Ratti)</p>
-                  <p>Price </p>
-                  <Link to="/addtocart">
-                    <button>Add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
+              </Link>
+            ))}
           </div>
         </div>
       </div>

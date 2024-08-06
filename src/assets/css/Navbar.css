@@ -32,7 +32,7 @@
   padding: 15px;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 1000;
 
   .logo {
     a {
@@ -62,7 +62,7 @@
       position: absolute;
       top: 42px;
       padding: 20px 10px;
-      height: 300px;
+      height: 330px;
     }
 
     a:hover .dropdowns2{
@@ -70,6 +70,7 @@
     }
     a:hover .dropdowns3{
       left: 27%;
+      height: 340px;
     }
 
     a {
@@ -118,6 +119,17 @@
       .dropdowns3{
         padding: 0 10px !important;
 
+        .dropdown1,
+        .dropdown2,
+        .dropdown3{
+          margin: 10px 0;
+        
+
+          ul{
+            height: 320px;
+          }
+        }
+
         ul {
           margin: 0 !important;
         }
@@ -127,6 +139,13 @@
 
   .user {
     gap: 1.5rem;
+
+    a{
+
+      i:hover{
+        color: #7a7a7a;
+      }
+    }
   }
 
   .hamburger {
@@ -138,7 +157,9 @@
   background-color: rgb(2, 2, 78);
   border-top: 0.5px solid rgb(163, 163, 163);
   position: sticky;
-  top: 50px;
+  top: 67px;
+  padding: 0 20px;
+  z-index: 1000;
 
   input {
     width: 90%;
@@ -151,6 +172,11 @@
 
   input:focus {
     outline: none;
+  }
+
+  i{
+    color: white;
+    font-size: 24px;
   }
 }
 

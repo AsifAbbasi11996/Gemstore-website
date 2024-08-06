@@ -4,7 +4,7 @@ import "../assets/css/Navbar.css";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false); // Add state for search bar
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -136,7 +136,7 @@ const Navbar = () => {
           </Link>
           <Link
             to="/rudraksha"
-            onClick={() => handleNavigation("/gemstone")}
+            onClick={() => handleNavigation("/rudraksha")}
             className="nav-item"
           >
             Rudraksha
@@ -362,7 +362,7 @@ const Navbar = () => {
         </div>
 
         <div className="user">
-          <Link>
+          <Link to='/signup'>
             <i class="ri-user-3-line"></i>
           </Link>
           <Link onClick={toggleSearch}>
@@ -376,7 +376,7 @@ const Navbar = () => {
 
       {isSearchOpen && (
         <div className="search-bar-container">
-          <input type="text" placeholder="Search..." />
+          <i class="ri-search-line"></i><input type="text" placeholder="Search..." />
         </div>
       )}
     </>

@@ -32,6 +32,10 @@
             font-weight: 400;
             margin: 7px 0;
           }
+
+          a:hover{
+            text-decoration: underline;
+          }
   
           .address {
             p {

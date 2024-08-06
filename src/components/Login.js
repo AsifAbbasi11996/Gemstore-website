@@ -17,7 +17,7 @@ const Login = () => {
             <div class="signup-container login-container">
                 <div class="container">
                     <div class="form">
-                        <h1>Log in to start journey</h1>
+                        <h1>Log in to start Shopping</h1>
                         <form action="">
                             <label for="">Email address</label>
                             <input type="email" placeholder="Please enter your e-mail" required />
@@ -32,7 +32,10 @@ const Login = () => {
                             <button>Log in</button>
                             <p><a href="">Forgot password ?</a></p>
                             <p>or</p>
-                            <button class="signup-google"><img src={google} alt="" /><span>Continue with Google</span></button>
+                            <button class="signup-google">
+                                <img src={google} alt="" />
+                                <span>Continue with Google</span>
+                            </button>
                             <p>Don't have an account ? &nbsp;<Link to="/signup">Sign Up here</Link></p>
                         </form>
                     </div>

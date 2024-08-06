@@ -28,15 +28,16 @@
 
 .form {
     color: black;
-    width: 370px;
+    width: 450px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 15px #b5b5b5;
 
     h1 {
-        font-size: 40px;
+        font-size: 24px;
         line-height: 1.2;
         margin-bottom: 20px;
+        text-align: center;
     }
 
     form {
@@ -65,7 +66,7 @@
 
             .ri-eye-fill, .ri-eye-off-fill {
                 position: absolute;
-                top: 22px;
+                top: 25px;
                 right: 14px;
                 font-size: 22px;
                 font-style: normal;
@@ -82,24 +83,29 @@
             font-weight: 600;
             font-family: "Poppins", sans-serif;
             border-radius: 25px;
-            color: white;
-            background: rgb(255, 106, 0);
+            color: black;
+            background: transparent;
+            border: 2px solid rgb(1, 1, 73);
             cursor: pointer;
-            border: none;
+        }
+
+        button:hover{
+            background-color: rgb(1, 1, 73);
+            color: white;
         }
 
         .signup-google {
             display: flex;
             align-items: center;
+            justify-content: center;
+            column-gap: 20px;
             background: transparent;
-            border: 2px solid rgb(84, 84, 84);
+            border: 2px solid rgb(1, 1, 73);
             margin-bottom: 25px;
 
-            img {
-                margin-right: 50px;
-            }
-            span{
-                color: black;
+
+            span:hover{
+                color: white;
             }
         }
 

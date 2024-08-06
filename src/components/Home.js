@@ -315,8 +315,8 @@ const Home = () => {
             <img src={c_img2} alt="" />
           </div>
           <div className="text">
-            <p>introducing</p>
-            <p>healing cyrstal bracelets</p>
+            <h2>introducing</h2>
+            <h3>healing cyrstal bracelets</h3>
             <p className="para">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus
               natus dicta quam animi velit corrupti sunt voluptate excepturi

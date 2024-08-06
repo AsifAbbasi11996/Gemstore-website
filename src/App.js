@@ -16,7 +16,7 @@ import Address from "./components/Address";
 import Payment from "./components/Payment";
 import Address2 from "./components/Address2";
 import Login from "./components/Login.js";
-import Signup from "./components/Signup.js";
+import SignUp from "./components/SignUp.js";
 
 function App() {
   return (
@@ -37,7 +37,7 @@ function App() {
         <Route path="/address2" element={<Address2 />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
       <Footer />
     </>

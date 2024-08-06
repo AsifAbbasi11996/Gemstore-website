@@ -27,10 +27,10 @@ const Footer = () => {
             <div className="contactus flex">
               <p>contact us</p>
               <div className="address">
-                <p>Company Name:- Sewa Life Sciences</p>
-                <p>Email :- support@gemsmantra.com</p>
-                <p>Contact :- +917236936901</p>
-                <p>Address:- Kakadeo, Kanpur ( U.P )</p>
+                <p>Company Name : - Sewa Life Sciences</p>
+                <p>Email : - support@gemsmantra.com</p>
+                <p>Contact : - +917236936901</p>
+                <p>Address : - Kakadeo, Kanpur ( U.P )</p>
               </div>
             </div>
             <div className="quicklinks flex">

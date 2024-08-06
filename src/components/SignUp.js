@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import '../assets/css/Signup.css'
 import google from '../assets/images/google.svg'
 
-const Signup = () => {
+const SignUp = () => {
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -42,7 +42,7 @@ const Signup = () => {
         } else {
             setErrorMessage('');
             console.log('Form submitted');
-           
+
         }
     };
 
@@ -51,7 +51,7 @@ const Signup = () => {
             <div class="signup-container">
                 <div class="container">
                     <div class="form">
-                        <h1>Sign up to start your Journey</h1>
+                        <h1>Sign up to start your Shopping</h1>
                         <form action="" onSubmit={handleSubmit}>
                             <label for="">Email address</label>
                             <input type="email" placeholder="Please enter your e-mail" required />
@@ -75,15 +75,17 @@ const Signup = () => {
                             {errorMessage && <p className="error-message">{errorMessage}</p>}
                             <button>Next</button>
                             <p>or</p>
-                            <button class="signup-google"><img src={google} alt="" /><span>Sign Up with Google</span></button>
+                            <button class="signup-google">
+                                <img src={google} alt="" />
+                                <span>Sign Up with Google</span>
+                            </button>
                             <p>Already have an account? &nbsp;<Link to="/login">Log in here</Link></p>
                         </form>
                     </div>
                 </div>
             </div>
-
         </>
     )
 }
 
-export default Signup
+export default SignUp
