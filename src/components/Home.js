@@ -322,7 +322,9 @@ const Home = () => {
               natus dicta quam animi velit corrupti sunt voluptate excepturi
               cumque a?
             </p>
-            <button>check out collection</button>
+            <Link to='/gifts'>
+              <button>check out collection</button>
+            </Link>
           </div>
         </div>
 

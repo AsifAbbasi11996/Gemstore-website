@@ -15,6 +15,8 @@ import Buynow from "./components/Buynow.js";
 import Address from "./components/Address";
 import Payment from "./components/Payment";
 import Address2 from "./components/Address2";
+import Login from "./components/Login.js";
+import Signup from "./components/Signup.js";
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
         <Route path="/address" element={<Address />} />
         <Route path="/address2" element={<Address2 />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
       <Footer />
     </>

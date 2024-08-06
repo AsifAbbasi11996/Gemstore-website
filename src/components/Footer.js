@@ -44,7 +44,7 @@ const Footer = () => {
           </div>
 
           <div className="copyright">
-            <p>copyright &copy; website name</p>
+            <p>copyright &copy; gemstore</p>
           </div>
         </div>
       </footer>

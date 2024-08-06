@@ -7,18 +7,16 @@ const Product = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const [selectedImage, setSelectedImage] = useState("img1");
+  const [quantity, setQuantity] = useState(1);
 
-  // Array of image paths or URLs
-  const images = {
-    img1: "path/to/image1.jpg", // Replace with the actual path or URL
-    img2: "path/to/image2.jpg",
-    img3: "path/to/image3.jpg",
+  const handleIncrement = () => {
+    setQuantity(quantity + 1);
   };
 
-  // Handle image selection
-  const handleImageClick = (imageKey) => {
-    setSelectedImage(images[imageKey]);
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
   };
 
   return (
@@ -27,37 +25,33 @@ const Product = () => {
         <div className="product">
           <div className="images">
             <div className="sm_images">
-              <div className="img" onClick={() => handleImageClick("img1")}>
+              <div className="img">
                 img1
               </div>
-              <div className="img" onClick={() => handleImageClick("img2")}>
+              <div className="img">
                 img2
               </div>
-              <div className="img" onClick={() => handleImageClick("img3")}>
+              <div className="img">
                 img3
               </div>
             </div>
             <div className="lg_image">
-              <img src={selectedImage} alt="Selected" />
+              <img src="" alt="Selected" />
             </div>
           </div>
           <div className="details">
-            <h2>7 mukhi rudraksha</h2>
-            <h2>
-              <li>PURPOSE :</li>
-            </h2>
+            <h2>Product Name</h2>
             <p>
-              Attracts wealth, prosperity, and abundance. Offers protection
-              against negative influences and promotes spiritual growth.
+              <span className="sp">SP</span>
+              <span className="mrp"> <del>MRP</del> </span>
             </p>
-            <h2>
-              <li>GUARANTEE :</li>
-            </h2>
-            <p>100% original, Lab Certified, Authentic and Natural</p>
-            <h2>
-              <li>DIVINE CONNECTION :</li>
-            </h2>
-            <p>Goddess Mahalaxmi</p>
+
+            <div className="qty-buttons">
+              <button onClick={handleDecrement}>-</button>
+              <span>{quantity}</span>
+              <button onClick={handleIncrement}>+</button>
+            </div>
+
             <div className="buttons">
               <Link to="/addtocart">
                 <button>add to cart</button>
@@ -66,6 +60,113 @@ const Product = () => {
                 <button>buy now</button>
               </Link>
             </div>
+
+            <div className="about-product">
+              About product
+            </div>
+          </div>
+        </div>
+
+        <hr />
+
+        <div className="related_products">
+          <h2>Related Products</h2>
+          <div className="cards">
+            <Link to="/product">
+              <div className="card">
+                <div className="img">
+                  <img src="https://gemsmantra.com/cdn/shop/files/1_1875e830-8d16-4503-a226-79c03b0e9b11.jpg?v=1707119124&width=300" />
+                </div>
+                <div className="details">
+                  <p>7 mukhi rudraksha</p>
+                  <p>
+                    <span>from rs. 1,540.00 </span>
+                    <span>
+                      <del>rs. 2,200</del>
+                    </span>
+                  </p>
+                  <p>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                  </p>
+                  <Link to='/addtocart'>
+                    <button>add to cart</button>
+                  </Link>
+                </div>
+              </div>
+            </Link>
+            <Link to="/product">
+              <div className="card">
+                <div className="img">
+                  <img src="https://gemsmantra.com/cdn/shop/files/1_c4216d1c-32ad-4f24-9ae9-609884e67b90.jpg?v=1707119035&width=200" />
+                </div>
+                <div className="details">
+                  <p>7 mukhi rudraksha</p>
+                  <p>
+                    from rs. 1,540.00 <del>rs. 2,200</del>
+                  </p>
+                  <p>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                  </p>
+                  <Link to='/addtocart'>
+                    <button>add to cart</button>
+                  </Link>
+                </div>
+              </div>
+            </Link>
+            <Link to="/product">
+              <div className="card">
+                <div className="img">
+                  <img src="https://gemsmantra.com/cdn/shop/files/1_1875e830-8d16-4503-a226-79c03b0e9b11.jpg?v=1707119124&width=300" />
+                </div>
+                <div className="details">
+                  <p>7 mukhi rudraksha</p>
+                  <p>
+                    from rs. 1,540.00 <del>rs. 2,200</del>
+                  </p>
+                  <p>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                  </p>
+                  <Link to='/addtocart'>
+                    <button>add to cart</button>
+                  </Link>
+                </div>
+              </div>
+            </Link>
+            <Link to="/product">
+              <div className="card">
+                <div className="img">
+                  <img src="https://gemsmantra.com/cdn/shop/files/1_1875e830-8d16-4503-a226-79c03b0e9b11.jpg?v=1707119124&width=300" />
+                </div>
+                <div className="details">
+                  <p>7 mukhi rudraksha</p>
+                  <p>
+                    from rs. 1,540.00 <del>rs. 2,200</del>
+                  </p>
+                  <p>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                    <i class="ri-star-s-fill"></i>
+                  </p>
+                  <Link to='/addtocart'>
+                    <button>add to cart</button>
+                  </Link>
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </div>
