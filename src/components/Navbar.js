@@ -1,11 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 import "../assets/css/Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ cartCount }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
   const navigate = useNavigate();
+
+  const apiLinks = [
+    'https://gemstore-backend.onrender.com/api/gemstone/all',
+    'https://gemstore-backend.onrender.com/api/rudraksha/all',
+    'https://gemstore-backend.onrender.com/api/baracelets/all',
+    'https://gemstore-backend.onrender.com/api/trees/all',
+    'https://gemstore-backend.onrender.com/api/rakhi/all'
+  ]
+
+  useEffect(() => {
+    if (searchTerm) {
+      const fetchData = async () => {
+        try {
+          const requests = apiLinks.map(link => axios.get(link));
+          const responses = await Promise.all(requests);
+          const products = responses.flatMap(response => response.data);
+  
+          // Filter products by Name only and limit to 10 suggestions
+          const filtered = products
+            .filter((product) =>
+              product.Name.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .slice(0, 10); // Limit suggestions to 10
+          setSuggestions(filtered);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          setSuggestions([]);
+        }
+      };
+  
+      fetchData();
+    } else {
+      setSuggestions([]);
+    }
+  }, [searchTerm]);
+
+
+  const handleSearchSelect = (product) => {
+    navigate(`/product/${product._id}`, { state: { product } });
+    setSearchTerm('');
+    setSuggestions([]);
+  };
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -353,11 +398,11 @@ const Navbar = () => {
           <Link to="/trees" onClick={() => handleNavigation("/trees")} className="nav-item">
             Trees
           </Link>
-          <Link to="/gifts" onClick={() => handleNavigation("/gifts")} className="nav-item">
-            Gifts
-          </Link>
           <Link to="/rakhi" onClick={() => handleNavigation("/rakhi")} className="nav-item">
             Rakhi
+          </Link>
+          <Link to="/gifts" onClick={() => handleNavigation("/gifts")} className="nav-item">
+            Gifts
           </Link>
         </div>
 
@@ -370,15 +415,28 @@ const Navbar = () => {
           </Link>
           <Link to="/addtocart">
             <i class="ri-shopping-cart-line"></i>
+            {cartCount > 0 && <span>{cartCount}</span>}
           </Link>
         </div>
       </div>
 
       {isSearchOpen && (
         <div className="search-bar-container">
-          <i class="ri-search-line"></i><input type="text" placeholder="Search..." />
+          <i className="ri-search-line"></i>
+          <input type="text" placeholder="Search..." value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} />
+          {suggestions.length > 0 && (
+            <ul className="suggestions-list">
+              {suggestions.map((item) => (
+                <li key={item._id} onClick={() => handleSearchSelect(item)}>
+                  {item.Name}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
+
     </>
   );
 };

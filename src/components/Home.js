@@ -17,6 +17,10 @@ import img4 from "../assets/images/slider_img3.webp";
 import icons_gems from "../assets/images/icons_gems.webp";
 
 const Home = () => {
+  const [rudrakshaData, setRudrakshaData] = useState([]);
+  const [braceletData, setBraceletData] = useState([]);
+  const [maxLength, setMaxLength] = useState(30); 
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -36,8 +40,89 @@ const Home = () => {
   useEffect(() => {
     const intervalId = setInterval(nextSlide, 3000);
 
-
     return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const fetchRudrakshaData = async () => {
+      try {
+        const res = await fetch('https://gemstore-backend.onrender.com/api/rudraksha/all', {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json'
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const resData = await res.json();
+        setRudrakshaData(resData);
+      } catch (error) {
+        console.error('Error fetching Rudraksha data:', error);
+      }
+    };
+
+    fetchRudrakshaData();
+
+    const handleResize = () => {
+      if (window.innerWidth > 1023) {
+        setMaxLength(30);
+      } else {
+        setMaxLength(20);
+      }
+    };
+
+    handleResize(); 
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const truncateText = (text, maxLength) => {
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  };
+  
+  useEffect(() => {
+    const fetchBraceletData = async () => {
+      try {
+        const res = await fetch('https://gemstore-backend.onrender.com/api/bracelets/all', {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json'
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const resData = await res.json();
+        setBraceletData(resData);
+      } catch (error) {
+        console.error('Error fetching Bracelet data:', error);
+      }
+    };
+
+    fetchBraceletData();
+    
+    const handleResize = () => {
+      if (window.innerWidth > 1023) {
+        setMaxLength(30);
+      } else {
+        setMaxLength(20);
+      }
+    };
+
+    handleResize(); 
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return (
@@ -105,100 +190,33 @@ const Home = () => {
         <div className="content2">
           <h1>100% NATURAL HIMALAYAN RUDRAKSHA</h1>
           <div className="cards">
-            <Link to="/product">
-              <div className="card">
-                <div className="img">
-                  <img src="https://gemsmantra.com/cdn/shop/files/1_1875e830-8d16-4503-a226-79c03b0e9b11.jpg?v=1707119124&width=300" />
+            {rudrakshaData.map((item, index) => (
+              <Link to={`/rudraksha/product/${item._id}`} key={item._id} state={{product : item}}>
+                <div className="card">
+                  <div className="img">
+                    <img src={item.Images[0]} alt={item.Name} />
+                  </div>
+                  <div className="details">
+                  <p>{truncateText(item.Name, maxLength)}</p>
+                    <p>
+                       ₹ {item.SP} <del>₹ {item.Mrp}</del>
+                    </p>
+                    <p>
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <i key={i} className="ri-star-s-fill"></i>
+                      ))}
+                    </p>
+                    <Link to='/addtocart'>
+                      <button>add to cart</button>
+                    </Link>
+                  </div>
                 </div>
-                <div className="details">
-                  <p>7 mukhi rudraksha</p>
-                  <p>
-                    from rs. 1,540.00 <del>rs. 2,200</del>
-                  </p>
-                  <p>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                  </p>
-                  <Link to='/addtocart'>
-                    <button>add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
-            <Link to="/product">
-              <div className="card">
-                <div className="img">
-                  <img src="https://gemsmantra.com/cdn/shop/files/1_c4216d1c-32ad-4f24-9ae9-609884e67b90.jpg?v=1707119035&width=200" />
-                </div>
-                <div className="details">
-                  <p>7 mukhi rudraksha</p>
-                  <p>
-                    from rs. 1,540.00 <del>rs. 2,200</del>
-                  </p>
-                  <p>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                  </p>
-                  <Link to='/addtocart'>
-                    <button>add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
-            <Link to="/product">
-              <div className="card">
-                <div className="img">
-                  <img src="https://gemsmantra.com/cdn/shop/files/1_1875e830-8d16-4503-a226-79c03b0e9b11.jpg?v=1707119124&width=300" />
-                </div>
-                <div className="details">
-                  <p>7 mukhi rudraksha</p>
-                  <p>
-                    from rs. 1,540.00 <del>rs. 2,200</del>
-                  </p>
-                  <p>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                  </p>
-                  <Link to='/addtocart'>
-                    <button>add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
-            <Link to="/product">
-              <div className="card">
-                <div className="img">
-                  <img src="https://gemsmantra.com/cdn/shop/files/1_1875e830-8d16-4503-a226-79c03b0e9b11.jpg?v=1707119124&width=300" />
-                </div>
-                <div className="details">
-                  <p>7 mukhi rudraksha</p>
-                  <p>
-                    from rs. 1,540.00 <del>rs. 2,200</del>
-                  </p>
-                  <p>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                  </p>
-                  <Link to='/addtocart'>
-                    <button>add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
+              </Link>
+            ))}
           </div>
-          <button>VIEW ALL</button>
+          <Link to='/rudraksha'>
+            <button>VIEW ALL</button>
+          </Link>
         </div>
 
         <marquee behavior="" direction="">
@@ -211,100 +229,33 @@ const Home = () => {
         <div className="content3">
           <h1>Bracelets</h1>
           <div className="cards">
-            <Link to="/product">
-              <div className="card">
-                <div className="img">
-                  <img src="https://gemsmantra.com/cdn/shop/files/1_1875e830-8d16-4503-a226-79c03b0e9b11.jpg?v=1707119124&width=300" />
+            {braceletData.map((item, index) => (
+              <Link to={`/bracelets/product/${item._id}`} key={item._id} state={{ product: item }}>
+                <div className="card">
+                  <div className="img">
+                    <img src={item.Images[0]} alt={item.Name} />
+                  </div>
+                  <div className="details">
+                  <p>{truncateText(item.Name, maxLength)}</p>
+                    <p>
+                      ₹ {item.SP} <del>₹ {item.Mrp}</del>
+                    </p>
+                    <p>
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <i key={i} className="ri-star-s-fill"></i>
+                      ))}
+                    </p>
+                    <Link to='/addtocart'>
+                      <button>add to cart</button>
+                    </Link>
+                  </div>
                 </div>
-                <div className="details">
-                  <p>7 mukhi rudraksha</p>
-                  <p>
-                    from rs. 1,540.00 <del>rs. 2,200</del>
-                  </p>
-                  <p>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                  </p>
-                  <Link to='/addtocart'>
-                    <button>add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
-            <Link to="/product">
-              <div className="card">
-                <div className="img">
-                  <img src="https://gemsmantra.com/cdn/shop/files/1_1875e830-8d16-4503-a226-79c03b0e9b11.jpg?v=1707119124&width=300" />
-                </div>
-                <div className="details">
-                  <p>7 mukhi rudraksha</p>
-                  <p>
-                    from rs. 1,540.00 <del>rs. 2,200</del>
-                  </p>
-                  <p>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                  </p>
-                  <Link to='/addtocart'>
-                    <button>add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
-            <Link to="/product">
-              <div className="card">
-                <div className="img">
-                  <img src="https://gemsmantra.com/cdn/shop/files/1_1875e830-8d16-4503-a226-79c03b0e9b11.jpg?v=1707119124&width=300" />
-                </div>
-                <div className="details">
-                  <p>7 mukhi rudraksha</p>
-                  <p>
-                    from rs. 1,540.00 <del>rs. 2,200</del>
-                  </p>
-                  <p>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                  </p>
-                  <Link to='/addtocart'>
-                    <button>add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
-            <Link to="/product">
-              <div className="card">
-                <div className="img">
-                  <img src="https://gemsmantra.com/cdn/shop/files/1_1875e830-8d16-4503-a226-79c03b0e9b11.jpg?v=1707119124&width=300" />
-                </div>
-                <div className="details">
-                  <p>7 mukhi rudraksha</p>
-                  <p>
-                    from rs. 1,540.00 <del>rs. 2,200</del>
-                  </p>
-                  <p>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                  </p>
-                  <Link to='/addtocart'>
-                    <button>add to cart</button>
-                  </Link>
-                </div>
-              </div>
-            </Link>
+              </Link>
+            ))}
           </div>
-          <button>VIEW ALL</button>
+          <Link to='/bracelets'>
+            <button>VIEW ALL</button>
+          </Link>
         </div>
 
         <VideoCart />

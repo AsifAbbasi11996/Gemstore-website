@@ -71,13 +71,19 @@
             .question{
 
                 summary{
-                    font-size: 15px;
+                    span{
+                        font-size: 14px !important;
+                    }
                 }
             }
         }
 
         .answer{
             max-width: 300px !important;
+
+            p{
+                font-size: 12px !important;
+            }
         }
     }
 }

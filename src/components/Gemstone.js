@@ -5,8 +5,19 @@ import Filter from "./Filter";
 import gemstone_img from "../assets/images/gemstone_img.webp";
 
 const Gemstone = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [maxLength, setMaxLength] = useState(30); 
+  const [filters, setFilters] = useState({
+    minPrice: "",
+    maxPrice: "",
+    sortOrder: ""
+  });
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -32,13 +43,71 @@ const Gemstone = () => {
 
         const resData = await res.json();
         setData(resData);
+        setFilteredData(resData); // Set initial filtered data
       } catch (error) {
         console.error('Error fetching data:', error);
-      } 
+      }
     };
 
     fetchData();
+
+    const handleResize = () => {
+      if (window.innerWidth > 1023) {
+        setMaxLength(30);
+      } else {
+        setMaxLength(20);
+      }
+    };
+
+    handleResize(); 
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
+
+  useEffect(() => {
+    let filtered = data;
+
+    if (filters.minPrice) {
+      filtered = filtered.filter((item) => item.Mrp >= filters.minPrice);
+    }
+    
+    if (filters.maxPrice) {
+      filtered = filtered.filter((item) => item.Mrp <= filters.maxPrice);
+    }
+
+    if (filters.sortOrder) {
+      filtered = filtered.sort((a, b) => {
+        if (filters.sortOrder === "lowtohigh") {
+          return a.Mrp - b.Mrp;
+        } else if (filters.sortOrder === "hightolow") {
+          return b.Mrp - a.Mrp;
+        } else if (filters.sortOrder === "atoz") {
+          return a.Name.localeCompare(b.Name);
+        } else if (filters.sortOrder === "ztoa") {
+          return b.Name.localeCompare(a.Name);
+        }
+        return 0;
+      });
+    }
+
+    setFilteredData(filtered);
+  }, [filters, data]);
+
+  const truncateText = (text, maxLength) => {
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  };
+
+  const handleApplyFilters = (filterCriteria) => {
+    setFilters({
+      minPrice: filterCriteria.minPrice,
+      maxPrice: filterCriteria.maxPrice,
+      sortOrder: filterCriteria.sortOrder
+    });
+    handleClose(); // Optionally close the filter panel
+  };
 
   return (
     <>
@@ -55,7 +124,7 @@ const Gemstone = () => {
             </span>
           </button>
           <div className={`filter ${isOpen ? "active" : ""}`}>
-            <Filter />
+            <Filter onApplyFilters={handleApplyFilters} />
             <button className="closeBtn" onClick={handleClose}>
               <span>
                 <i className="ri-close-line"></i>
@@ -64,14 +133,14 @@ const Gemstone = () => {
           </div>
 
           <div className="products">
-            {data.map((res) => (
-              <Link to={`/product/${res._id}`} key={res._id} state={{ product: res }}>
+            {filteredData.map((res) => (
+              <Link to={`/gemstone/product/${res._id}`} key={res._id} state={{ product: res }}>
                 <div className="card">
                   <img src={res.Images[0]} alt={res.Name} />
                   <div className="details">
-                    <p>{res.Name}</p>
+                    <p>{truncateText(res.Name, maxLength)}</p>
                     <p>Price: ₹{res.Mrp}</p>
-                    <Link to="/addtocart">
+                    <Link to={`/addtocart/${res._id}`} state={{ product: res }}>
                       <button>Add to cart</button>
                     </Link>
                   </div>

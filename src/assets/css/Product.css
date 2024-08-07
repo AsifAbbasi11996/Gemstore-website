@@ -21,6 +21,11 @@
           height: 70px;
           background-color: rgb(202, 202, 202);
           cursor: pointer;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
 
@@ -29,6 +34,11 @@
         width: 300px;
         height: 300px;
         background-color: rgb(202, 202, 202);
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
     }
 
@@ -63,7 +73,7 @@
         button {
           background-color: #ddd;
           border: 1px solid #ccc;
-          padding: 10px;
+          padding: 2px 10px;
           font-size: 16px;
           cursor: pointer;
         }
@@ -83,15 +93,46 @@
             font-size: 16px;
             padding: 10px;
             color: white;
-            background-color: rgb(0, 0, 255);
-            border: none;
+            background-color: #2e2eaa;
+            border: 1px solid #2e2eaa;
             border-radius: 10px;
             margin-right: 30px;
             width: 150px;
             cursor: pointer;
           }
+
+          button:hover {
+            color: #2e2eaa;
+            border: 1px solid #2e2eaa;
+            background-color: transparent;
+          }
         }
       }
+
+      .about-product {
+        margin: 10px 0;
+      }
+
+      .questions {
+        .faq {
+          margin: 10px 0;
+
+          p {
+            margin: 5px 0;
+          }
+        }
+      }
+
+      .benefits {
+
+        ul {
+
+          li {
+            margin-left: 20px;
+          }
+        }
+      }
+
     }
   }
 
@@ -144,14 +185,20 @@
 
           button {
             text-transform: uppercase;
-            background-color: #000;
+            background-color: #2e2eaa;
+            border: 1px solid #2e2eaa;
             color: white;
-            border: none;
             cursor: pointer;
             font-size: 16px;
             padding: 5px 10px;
             border-radius: 5px;
             margin: 10px 0;
+          }
+
+          button:hover {
+            background-color: transparent;
+            color: #2e2eaa;
+            border: 1px solid #2e2eaa;
           }
         }
       }
@@ -178,20 +225,22 @@
       }
 
       .details {
-        h2 {
-          font-size: 20px;
 
-          li {
-            font-size: 18px;
-          }
+        h2 {
+          font-size: 18px;
+          margin-bottom: 10px;
         }
 
         p {
-          font-size: 14px;
+          margin-bottom: 10px;
+        }
+
+        .qty-buttons {
+          margin: 20px 0;
         }
 
         .buttons {
-          margin-top: 20px !important;
+          margin: 20px 0 !important;
 
           a {
 
@@ -256,7 +305,7 @@
               font-size: 12px;
             }
 
-            p:nth-child(2){
+            p:nth-child(2) {
               display: flex;
               flex-direction: column;
             }

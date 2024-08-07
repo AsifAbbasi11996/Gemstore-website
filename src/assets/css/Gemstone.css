@@ -62,11 +62,17 @@
                   text-transform: uppercase;
                   padding: 5px 10px;
                   border-radius: 10px;
-                  border: none;
-                  background-color: rgb(42, 42, 250);
+                  border: 1px solid #2e2eaa;
+                  background-color: #2e2eaa;
                   color: white;
                   margin: 10px 0;
                   cursor: pointer;
+                }
+
+                button:hover{
+                  color: #2e2eaa;
+                  border: 1px solid #2e2eaa;
+                  background-color: transparent;
                 }
               }
             }

@@ -113,6 +113,7 @@
       align-items: center;
       justify-content: center;
       gap: 2rem;
+      padding: 0px 50px;
   
       h1 {
         text-transform: uppercase;
@@ -123,7 +124,7 @@
       .cards {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        
         gap: 2rem;
   
         a {
@@ -156,8 +157,7 @@
             button {
               text-transform: uppercase;
               background-color: #000;
-              border: none;
-              width: 50%;
+              border: 1px solid black;
               cursor: pointer;
               font-size: 16px;
               padding: 5px 10px;
@@ -176,8 +176,8 @@
         text-transform: uppercase;
         font-size: 18px;
         font-weight: 500;
-        border: none;
         background-color: #2e2eaa;
+        border: 1px solid #2e2eaa;
         border-radius: 10px;
         color: white;
         padding: 10px 15px;
@@ -187,7 +187,7 @@
   
       button:hover {
         color: #2e2eaa;
-        background-color: white;
+        background-color: transparent;
         border: 1px solid #2e2eaa;;
       }
     }
@@ -259,7 +259,7 @@
           text-transform: uppercase;
           font-size: 18px;
           font-weight: 500;
-          border: none;
+          border: 1px solid #2e2eaa;
           background-color: #2e2eaa;
           border-radius: 10px;
           color: white;
@@ -270,7 +270,7 @@
   
         button:hover {
           color: #2e2eaa;
-          background-color: white;
+          background-color: transparent;
           border: 1px solid #2e2eaa;
         }
       }
@@ -315,6 +315,7 @@
   
       .content2,
       .content3 {
+        padding: 0 20px;
         h1 {
           font-size: 18px;
         }
@@ -334,7 +335,6 @@
               }
   
               button {
-                width: 70%;
                 font-size: 14px;
               }
             }
