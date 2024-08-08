@@ -1,53 +1,103 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import "../assets/css/Navbar.css";
+
+// Debounce function
+const debounce = (func, delay) => {
+  let timerId;
+  return (...args) => {
+    if (timerId) clearTimeout(timerId);
+    timerId = setTimeout(() => func(...args), delay);
+  };
+};
 
 const Navbar = ({ cartCount }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const apiLinks = [
     'https://gemstore-backend.onrender.com/api/gemstone/all',
     'https://gemstore-backend.onrender.com/api/rudraksha/all',
-    'https://gemstore-backend.onrender.com/api/baracelets/all',
+    'https://gemstore-backend.onrender.com/api/bracelets/all',
     'https://gemstore-backend.onrender.com/api/trees/all',
     'https://gemstore-backend.onrender.com/api/rakhi/all'
-  ]
+  ];
+
+  const fetchSuggestions = useCallback(
+    debounce(async (term) => {
+      if (!term) {
+        setSuggestions([]);
+        return;
+      }
+      setLoading(true);
+      setError(null);
+      try {
+        const requests = apiLinks.map(link => axios.get(link));
+        const responses = await Promise.all(requests);
+
+        // Check if responses have the expected structure
+        const products = responses.flatMap(response => {
+          if (response.data && Array.isArray(response.data)) {
+            return response.data;
+          }
+          console.error('Unexpected response structure:', response);
+          return [];
+        });
+
+        const filtered = products
+          .filter(product => 
+            product.Name && product.Name.toLowerCase().includes(term.toLowerCase()) ||
+            product.category && product.category.toLowerCase().includes(term.toLowerCase())
+          )
+          .slice(0, 10);
+
+        setSuggestions(filtered);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setError('Failed to load suggestions. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    }, 300),
+    []
+  );
 
   useEffect(() => {
-    if (searchTerm) {
-      const fetchData = async () => {
-        try {
-          const requests = apiLinks.map(link => axios.get(link));
-          const responses = await Promise.all(requests);
-          const products = responses.flatMap(response => response.data);
-  
-          // Filter products by Name only and limit to 10 suggestions
-          const filtered = products
-            .filter((product) =>
-              product.Name.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-            .slice(0, 10); // Limit suggestions to 10
-          setSuggestions(filtered);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-          setSuggestions([]);
-        }
-      };
-  
-      fetchData();
-    } else {
-      setSuggestions([]);
-    }
-  }, [searchTerm]);
-
+    fetchSuggestions(searchTerm);
+  }, [searchTerm, fetchSuggestions]);
 
   const handleSearchSelect = (product) => {
-    navigate(`/product/${product._id}`, { state: { product } });
+    let path = '';
+    
+    switch (product.Category) {
+      case 'gemstone':
+        path = `/gemstone/product/${product._id}`;
+        break;
+      case 'rudraksha':
+        path = `/rudraksha/product/${product._id}`;
+        break;
+      case 'bracelet':
+        path = `/bracelets/product/${product._id}`;
+        break;
+      case 'trees':
+        path = `/trees/product/${product._id}`;
+        break;
+      case 'rakhi':
+        path = `/rakhi/product/${product._id}`;
+        break;
+      default:
+        path = '/'; // Default fallback path
+        break;
+    }
+    
+    console.log('Navigating to:', path); // Log path
+    navigate(path, { state: { product } });
     setSearchTerm('');
     setSuggestions([]);
   };
@@ -73,9 +123,9 @@ const Navbar = ({ cartCount }) => {
         <div className="hamburger">
           <div className="open_close" onClick={handleClick}>
             {isOpen ? (
-              <i class="ri-close-line"></i>
+              <i className="ri-close-line"></i>
             ) : (
-              <i class="ri-menu-2-line"></i>
+              <i className="ri-menu-2-line"></i>
             )}
           </div>
         </div>
@@ -85,9 +135,9 @@ const Navbar = ({ cartCount }) => {
           </Link>
         </div>
 
-        <div className={isOpen ? "nav active" : "nav"}>
-          <Link
-            to="/gemstone"
+       <div className={isOpen ? "nav active" : "nav"}>
+           <Link
+             to="/gemstone"
             onClick={() => handleNavigation("/gemstone")}
             className="nav-item"
           >
@@ -408,13 +458,13 @@ const Navbar = ({ cartCount }) => {
 
         <div className="user">
           <Link to='/signup'>
-            <i class="ri-user-3-line"></i>
+            <i className="ri-user-3-line"></i>
           </Link>
           <Link onClick={toggleSearch}>
-            <i class="ri-search-line"></i>
+            <i className="ri-search-line"></i>
           </Link>
           <Link to="/addtocart">
-            <i class="ri-shopping-cart-line"></i>
+            <i className="ri-shopping-cart-line"></i>
             {cartCount > 0 && <span>{cartCount}</span>}
           </Link>
         </div>
@@ -423,20 +473,26 @@ const Navbar = ({ cartCount }) => {
       {isSearchOpen && (
         <div className="search-bar-container">
           <i className="ri-search-line"></i>
-          <input type="text" placeholder="Search..." value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)} />
+          <input
+            type="search"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            aria-label="Search"
+          />
+          {loading && <p>Loading...</p>}
+          {error && <p className="error">{error}</p>}
           {suggestions.length > 0 && (
-            <ul className="suggestions-list">
+            <ul className="suggestions-list" aria-live="polite">
               {suggestions.map((item) => (
                 <li key={item._id} onClick={() => handleSearchSelect(item)}>
-                  {item.Name}
+                  {item.Name} ({item.category})
                 </li>
               ))}
             </ul>
           )}
         </div>
       )}
-
     </>
   );
 };

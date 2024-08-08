@@ -30,7 +30,6 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/addtocart/:id" element={<AddtoCart />} />
         <Route path="/gemstone" element={<Gemstone />} />
         <Route path="/gemstone/product/:id" element={<GemstoneProduct />} />
         <Route path="/rudraksha" element={<Rudraksha />} />
@@ -42,9 +41,10 @@ function App() {
         <Route path="/rakhi" element={<Rakhi />} />
         <Route path="/rakhi/product/:id" element={<RakhiProduct />} />
         <Route path="/gifts" element={<Gifts />} />
-        <Route path="/buynow" element={<Buynow />} />
-        <Route path="/address" element={<Address />} />
-        <Route path="/address2" element={<Address2 />} />
+        <Route path="/addtocart/:id" element={<AddtoCart />} />
+        <Route path="/buynow/:id" element={<Buynow />} />
+        <Route path="/address/:id" element={<Address />} />
+        <Route path="/address2/:id" element={<Address2 />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

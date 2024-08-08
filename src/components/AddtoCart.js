@@ -8,34 +8,33 @@ const AddtoCart = () => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [cartEmpty, setCartEmpty] = useState(false);
+  const [maxLength, setMaxLength] = useState(30);
 
-  // Define your API endpoints here
   const apiEndpoints = [
     'https://gemstore-backend.onrender.com/api/gemstone/all',
     'https://gemstore-backend.onrender.com/api/rudraksha/all',
     'https://gemstore-backend.onrender.com/api/bracelets/all',
     'https://gemstore-backend.onrender.com/api/trees/all',
     'https://gemstore-backend.onrender.com/api/rakhi/all',
-    // Add other API endpoints here
   ];
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        // Fetch data from all API endpoints
         const fetchPromises = apiEndpoints.map(url =>
           fetch(url).then(response => response.json())
         );
 
-        // Resolve all fetch promises
         const allProducts = await Promise.all(fetchPromises);
-
-        // Flatten the array of arrays
         const products = allProducts.flat();
 
-        // Find the product with the matching productId
         const foundProduct = products.find(p => p._id === productId);
-        setProduct(foundProduct);
+        if (!foundProduct) {
+          setCartEmpty(true);
+        } else {
+          setProduct(foundProduct);
+        }
       } catch (error) {
         console.error("Error fetching product:", error);
       } finally {
@@ -48,6 +47,27 @@ const AddtoCart = () => {
     }
   }, [productId]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1023) {
+        setMaxLength(30);
+      } else {
+        setMaxLength(20);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const truncateText = (text, maxLength) => {
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  };
+
   const handleIncrement = () => {
     setQuantity(quantity + 1);
   };
@@ -58,54 +78,60 @@ const AddtoCart = () => {
     }
   };
 
+  const handleRemove = () => {
+    // Clear the product state and mark cart as empty
+    setProduct(null);
+    setCartEmpty(true);
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
 
-  if (!product) {
-    return <p>Product not found</p>;
-  }
-
-  
   return (
     <>
       <div className="addtocart_main_container">
-        <h2>CART</h2>
-        <div className="addtocart_container">
-          <div className="product">
-            <div className="img">
-              <img src={product.Images[0]} alt={product.Name} />
+        {cartEmpty ? (
+          <div className="empty-cart-message">
+            <p>Your cart is empty</p>
+          </div>
+        ) : (
+          <div className="addtocart_container">
+            <div className="product">
+              <div className="img">
+                <img src={product.Images[0]} alt={product.Name} />
+              </div>
+              <div className="details">
+                <p>{truncateText(product.Name, maxLength)}</p>
+                <p>Price : ₹ {product.Mrp}</p>
+                <div className="buttons">
+                  <Link to={`/buynow/${productId}`} state={{ productId: product._id }}>
+                    <button>Buy Now</button>
+                  </Link>
+                  <button onClick={handleRemove}>
+                    Remove
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="details">
-              <p>{product.Name}</p>
-              <p>Price : ₹ {product.Mrp}</p>
+
+            <div className="quantity">
+              <p>Quantity</p>
               <div className="buttons">
-                <Link to="/buynow">
-                  <button>Buy Now</button>
-                </Link>
-                <Link>
-                  <button>Remove</button>
-                </Link>
+                <button onClick={handleDecrement}>-</button>
+                <span>{quantity}</span>
+                <button onClick={handleIncrement}>+</button>
+              </div>
+            </div>
+
+            <div className="totalamount">
+              <p>Total Amount</p>
+              <div className="price">
+                <p>₹ {product.Mrp * quantity}</p>
               </div>
             </div>
           </div>
-
-          <div className="quantity">
-            <p>Quantity</p>
-            <div className="buttons">
-              <button onClick={handleDecrement}>-</button>
-              <span>{quantity}</span>
-              <button onClick={handleIncrement}>+</button>
-            </div>
-          </div>
-
-          <div className="totalamount">
-            <p>Total Amount</p>
-            <div className="price">
-              <p>₹ {product.SP * quantity}</p>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </>
   );

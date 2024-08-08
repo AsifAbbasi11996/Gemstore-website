@@ -8,7 +8,7 @@ const GemstoneProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [maxLength, setMaxLength] = useState(30);
- 
+
 
   const { state } = useLocation();
   const product = state?.product;
@@ -71,18 +71,7 @@ const GemstoneProduct = () => {
     setSelectedImageIndex(index);
   };
 
-  const handleAddToCart = () => {
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    const existingItemIndex = cartItems.findIndex(item => item._id === product._id);
 
-    if (existingItemIndex !== -1) {
-      cartItems[existingItemIndex].quantity += quantity;
-    } else {
-      cartItems.push({ ...product, quantity });
-    }
-
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  };
 
   if (!product) {
     return <p>Product not found</p>;
@@ -186,8 +175,8 @@ const GemstoneProduct = () => {
                         <i className="ri-star-s-fill"></i>
                         <i className="ri-star-s-fill"></i>
                       </p>
-                      <Link>
-                        <button onClick={handleAddToCart}>add to cart</button>
+                      <Link to={`/addtocart/${product._id}`} state={{ productId: product._id }}>
+                        <button>add to cart</button>
                       </Link>
                     </div>
                   </div>

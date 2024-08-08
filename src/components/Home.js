@@ -206,9 +206,6 @@ const Home = () => {
                         <i key={i} className="ri-star-s-fill"></i>
                       ))}
                     </p>
-                    <Link to='/addtocart'>
-                      <button>add to cart</button>
-                    </Link>
                   </div>
                 </div>
               </Link>
@@ -245,9 +242,7 @@ const Home = () => {
                         <i key={i} className="ri-star-s-fill"></i>
                       ))}
                     </p>
-                    <Link to='/addtocart'>
-                      <button>add to cart</button>
-                    </Link>
+                   
                   </div>
                 </div>
               </Link>

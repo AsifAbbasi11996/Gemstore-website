@@ -52,7 +52,7 @@ const Rudraksha = () => {
 
     const handleResize = () => {
       if (window.innerWidth > 1023) {
-        setMaxLength(30);
+        setMaxLength(25);
       } else {
         setMaxLength(20);
       }
@@ -136,11 +136,8 @@ const Rudraksha = () => {
                 <div className="card">
                   <img src={res.Images[0]} alt={res.Name} />
                   <div className="details">
-                    <p>{truncateText(res.Name, maxLength)}</p>
-                    <p>Price: ₹{res.Mrp}</p>
-                    <Link to="/addtocart">
-                      <button>Add to cart</button>
-                    </Link>
+                    <p className="name">{truncateText(res.Name, maxLength)}</p>
+                    <p><span className="sp">₹{res.SP}</span> <span className="mrp"> <del>₹{res.Mrp}</del> </span> </p>
                   </div>
                 </div>
               </Link>

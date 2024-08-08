@@ -7,6 +7,8 @@
     .footer_container {
       background-color: rgb(1 29 40);
       padding: 20px 0;
+      position: sticky;
+      bottom: 0;
   
       .links {
         display: flex;

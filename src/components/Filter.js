@@ -33,7 +33,7 @@ const Filter = ({ onApplyFilters }) => {
     <div className="filter_container">
       <form onSubmit={applyFilters}>
         <div className="sortby">
-          <p>SORT BY</p>
+          <p>Filters</p>
           <div className="price">
             <input
               type="radio"

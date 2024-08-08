@@ -106,7 +106,7 @@ const RakhiProduct = () => {
                             <Link to={`/addtocart/${product._id}`} state={{ productId: product._id }}>
                                 <button>Add to Cart</button>
                             </Link>
-                            <Link to="/buynow">
+                            <Link to={`/buynow/${product._id}`} state={{ productId: product._id }}>
                                 <button>buy now</button>
                             </Link>
                         </div>
@@ -155,7 +155,7 @@ const RakhiProduct = () => {
                                                 <i className="ri-star-s-fill"></i>
                                                 <i className="ri-star-s-fill"></i>
                                             </p>
-                                            <Link to='/addtocart'>
+                                            <Link to={`/addtocart/${product._id}`} state={{ productId: product._id }}>
                                                 <button>add to cart</button>
                                             </Link>
                                         </div>

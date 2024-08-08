@@ -179,6 +179,20 @@
     color: white;
     font-size: 24px;
   }
+
+  ul {
+
+    li{
+      list-style-type: none;
+      color: white;
+      padding: 5px 0;
+      cursor: pointer;
+    }
+
+    li:hover{
+      text-decoration: underline;
+    }
+  }
 }
 
 @media only screen and (min-width: 120px) and (max-width: 1000px) {
@@ -234,7 +248,7 @@
   }
 
   .search-bar-container{
-    height: 3rem;
+    height: auto;
 
     i{
       font-size: 16px;

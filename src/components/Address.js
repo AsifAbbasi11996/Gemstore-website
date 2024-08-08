@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/Address.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Address = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
+  const location = useLocation();
+  const { productId } = location;
+  const { product, phoneNumber, email } = location.state || {};
+  
   const [otp, setOtp] = useState("");
   const [otpError, setOtpError] = useState("");
   const navigate = useNavigate();
 
   const handleOtpChange = (event) => {
     const { value } = event.target;
-
     if (/^\d{0,6}$/.test(value)) {
       setOtp(value);
       setOtpError("");
@@ -27,10 +26,10 @@ const Address = () => {
       setOtpError("Please enter exactly 6 digits.");
       return;
     }
-
     console.log("OTP:", otp);
-    navigate("/address2");
+    navigate(`/address2/${productId}`, { state: { product, phoneNumber, email } });
   };
+
   return (
     <>
       <div className="address_container">
@@ -64,7 +63,7 @@ const Address = () => {
             </div>
             <div className="otp_container">
               <div className="verify_number">
-                <i class="ri-verified-badge-line"></i>
+                <i className="ri-verified-badge-line"></i>
                 <p>Verify Mobile Number</p>
               </div>
 
@@ -95,13 +94,13 @@ const Address = () => {
             <h2>Order Summary</h2>
 
             <div className="product">
-              <img src="" alt="Product" />
-              <p>Product Name</p>
+              {product?.Images && <img src={product.Images[0]} alt="Product" />}
+              <p>{product?.Name}</p>
             </div>
 
             <div className="price">
-              <p>Price (incl. taxes)</p>
-              <p>₹5000</p>
+              <p>Price <span>(incl. taxes)</span></p>
+              <p>₹{product?.SP}</p>
             </div>
           </div>
         </div>
@@ -109,4 +108,5 @@ const Address = () => {
     </>
   );
 };
+
 export default Address;

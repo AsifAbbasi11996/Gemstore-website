@@ -12,7 +12,7 @@ const Gemstone = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [maxLength, setMaxLength] = useState(30); 
+  const [maxLength, setMaxLength] = useState(30);
   const [filters, setFilters] = useState({
     minPrice: "",
     maxPrice: "",
@@ -53,13 +53,13 @@ const Gemstone = () => {
 
     const handleResize = () => {
       if (window.innerWidth > 1023) {
-        setMaxLength(30);
+        setMaxLength(25);
       } else {
         setMaxLength(20);
       }
     };
 
-    handleResize(); 
+    handleResize();
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -73,7 +73,7 @@ const Gemstone = () => {
     if (filters.minPrice) {
       filtered = filtered.filter((item) => item.Mrp >= filters.minPrice);
     }
-    
+
     if (filters.maxPrice) {
       filtered = filtered.filter((item) => item.Mrp <= filters.maxPrice);
     }
@@ -138,11 +138,8 @@ const Gemstone = () => {
                 <div className="card">
                   <img src={res.Images[0]} alt={res.Name} />
                   <div className="details">
-                    <p>{truncateText(res.Name, maxLength)}</p>
-                    <p>Price: ₹{res.Mrp}</p>
-                    <Link to={`/addtocart/${res._id}`} state={{ product: res }}>
-                      <button>Add to cart</button>
-                    </Link>
+                    <p className="name">{truncateText(res.Name, maxLength)}</p>
+                    <p><span className="sp">₹{res.SP}</span> <span className="mrp"> <del>₹{res.Mrp}</del> </span> </p>
                   </div>
                 </div>
               </Link>

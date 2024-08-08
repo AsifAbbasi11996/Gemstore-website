@@ -1,21 +1,59 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/Buynow.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const Buynow = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
+  const location = useLocation();
+  const { productId } = location.state || {};
+  const [product, setProduct] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  // List of API endpoints to search for the product
+  const apiLinks = [
+    'https://gemstore-backend.onrender.com/api/gemstone/all',
+    'https://gemstore-backend.onrender.com/api/rudraksha/all',
+    'https://gemstore-backend.onrender.com/api/bracelets/all',
+    'https://gemstore-backend.onrender.com/api/trees/all',
+    'https://gemstore-backend.onrender.com/api/rakhi/all'
+  ];
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (productId) {
+        try {
+          const requests = apiLinks.map(link => axios.get(link));
+          const responses = await Promise.all(requests);
+
+          // Flatten the responses and find the product
+          let foundProduct = null;
+          for (const response of responses) {
+            const products = response.data;
+            foundProduct = products.find(p => p._id === productId);
+            if (foundProduct) break; // Stop searching if the product is found
+          }
+
+          if (foundProduct) {
+            setProduct(foundProduct);
+          } else {
+            console.warn('Product not found');
+            // Handle the case where the product is not found
+          }
+        } catch (error) {
+          console.error('Error fetching product:', error);
+          // Handle the error appropriately
+        }
+      }
+    };
+    fetchProduct();
+  }, [productId]);
 
   const handlePhoneNumberChange = (event) => {
     const { value } = event.target;
-
     if (/^\d*$/.test(value)) {
       setPhoneNumber(value);
       setPhoneNumberError("");
@@ -38,11 +76,13 @@ const Buynow = () => {
       return;
     }
 
-    navigate('/address')
+    // Pass the product and user details to the Address page
+    navigate(`/address/${productId}`, { state: { product, phoneNumber, email } });
     console.log("Phone Number:", phoneNumber);
     console.log("Email:", email);
   };
 
+  if (!product) return <p>Loading...</p>;
 
   return (
     <>
@@ -51,7 +91,6 @@ const Buynow = () => {
           <div className="logo">
             <h2>Gemstore</h2>
           </div>
-          
         </div>
         <div className="summary">
           <div className="left">
@@ -87,7 +126,8 @@ const Buynow = () => {
                   type="tel"
                   value={phoneNumber}
                   onChange={handlePhoneNumberChange}
-                  placeholder="Enter your phone number" required
+                  placeholder="Enter your phone number"
+                  required
                 />
                 {phoneNumberError && (
                   <p className="error-message">{phoneNumberError}</p>
@@ -99,7 +139,8 @@ const Buynow = () => {
                   type="email"
                   value={email}
                   onChange={handleEmailChange}
-                  placeholder="Enter your email" required
+                  placeholder="Enter your email"
+                  required
                 />
                 {emailError && (
                   <p className="error-message">{emailError}</p>
@@ -113,13 +154,13 @@ const Buynow = () => {
             <h2>Order Summary</h2>
 
             <div className="product">
-              <img src="" alt="Product" />
-              <p>Product Name</p>
+              {product.Images && <img src={product.Images[0]} alt="Product" />}
+              <p>{product.Name}</p>
             </div>
 
             <div className="price">
-              <p>Price (incl. taxes)</p>
-              <p>₹5000</p>
+              <p>Price <span>(incl. taxes)</span> </p>
+              <p>₹ {product.SP}</p>
             </div>
           </div>
         </div>
@@ -128,4 +169,4 @@ const Buynow = () => {
   );
 };
 
-export default Buynow
+export default Buynow;

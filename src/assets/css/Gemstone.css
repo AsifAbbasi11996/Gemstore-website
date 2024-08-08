@@ -1,79 +1,154 @@
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.gemstone_container {
+  .img {
+    img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+    }
   }
-  
+
+  .product_container {
+    padding: 10px;
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 10px;
+
+    .filterBtn {
+      display: none;
+    }
+
+    .closeBtn {
+      display: none;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      overflow-y: scroll;
+      height: 90vh;
+      padding-bottom: 20px;
+      padding: 20px;
+
+      a {
+        text-decoration: none;
+        color: black;
+
+        .card {
+          border-radius: 5px;
+          padding: 5px;
+          box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.356);
+
+          img {
+            width: 230px;
+            height: 210px;
+            border-radius: 5px 5px 0 0;
+            background-color: rgb(224, 216, 216);
+          }
+
+          .details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            p {
+              max-width: 250px;
+              text-align: center;
+
+              .mrp{
+                font-size: 15px;
+                margin-left: 5px;
+              }
+            }
+
+            .name{
+              font-size: 15px;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 120px) and (max-width: 1023px) {
   .gemstone_container {
     .img {
       img {
-        width: 100%;
-        height: 450px;
-        object-fit: cover;
+        height: 350px;
       }
     }
-  
-    .product_container {
-      padding: 10px;
-      display: flex;
-      gap: 1.5rem;
-      margin-top: 10px;
-  
-      .filterBtn {
-        display: none;
-      }
-  
-      .closeBtn {
-        display: none;
-      }
-  
-      .products {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        overflow-y: scroll;
-        height: 90vh;
-  
-        a {
-          text-decoration: none;
-          color: black;
-  
-          .card {
-            img {
-              width: 250px;
-              height: 230px;
-              background-color: rgb(224, 216, 216);
-            }
-  
-            .details {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-  
-              p {
-                max-width: 250px;
-                text-align: center;
-                font-size: 13px;
-              }
-  
-              a {
-  
-                button {
-                  font-size: 14px;
-                  text-transform: uppercase;
-                  padding: 5px 10px;
-                  border-radius: 10px;
-                  border: 1px solid #2e2eaa;
-                  background-color: #2e2eaa;
-                  color: white;
-                  margin: 10px 0;
-                  cursor: pointer;
-                }
 
-                button:hover{
-                  color: #2e2eaa;
-                  border: 1px solid #2e2eaa;
-                  background-color: transparent;
-                }
+    .product_container {
+      flex-direction: column;
+      margin-top: 0;
+      padding: 0px 10px;
+      gap: 1rem;
+
+      .filterBtn {
+        display: block;
+        width: fit-content;
+        font-size: 16px;
+        padding: 7px 10px;
+        background-color: #2e2f38;
+        color: white;
+        border: none;
+        margin: 0 10px;
+      }
+
+      .filter {
+        display: flex;
+        align-items: flex-start;
+        position: absolute;
+        top: 0;
+        left: -100%;
+        height: 100%;
+        transition: left 0.3s ease;
+      }
+
+      .filter.active {
+        left: 0;
+        z-index: 1;
+        position: fixed;
+      }
+
+      .closeBtn {
+        display: block;
+        border: none;
+        position: absolute;
+        right: 0;
+        background-color: rgb(230, 229, 229);
+        cursor: pointer;
+        margin: 10px;
+
+        i {
+          font-size: 30px;
+        }
+      }
+
+      .products {
+        justify-content: space-around;
+        gap: 2rem 0.5rem;
+
+        a {
+          .card {
+            
+            img {
+              width: 150px;
+              height: 130px;
+              
+            }
+
+            .details {
+              p {
+                max-width: 170px;
+                
               }
             }
           }
@@ -81,85 +156,4 @@
       }
     }
   }
-  
-  @media only screen and (min-width: 120px) and (max-width: 1023px) {
-    .gemstone_container {
-      .img {
-        img {
-          height: 350px;
-        }
-      }
-  
-      .product_container {
-        flex-direction: column;
-        margin-top: 0;
-        padding: 0px 10px;
-        gap: 1rem;
-  
-        .filterBtn {
-          display: block;
-          width: fit-content;
-          font-size: 16px;
-          padding: 7px 10px;
-          background-color: #2e2f38;
-          color: white;
-          border: none;
-          margin: 0 10px;
-        }
-  
-        .filter {
-          display: flex;
-          align-items: flex-start;
-          position: absolute;
-          top: 0;
-          left: -100%;
-          height: 100%;
-          transition: left 0.3s ease;
-        }
-  
-        .filter.active {
-          left: 0;
-          z-index: 1;
-          position: fixed;
-        }
-  
-        .closeBtn {
-          display: block;
-          border: none;
-          position: absolute;
-          right: 0;
-          background-color: rgb(230, 229, 229);
-          cursor: pointer;
-  
-          i {
-            font-size: 24px;
-          }
-        }
-  
-        .products {
-          justify-content: space-around;
-          gap: 0;
-  
-          a {
-            .card {
-              img {
-                width: 170px;
-                height: 150px;
-              }
-  
-              .details {
-                p {
-                  max-width: 170px;
-                  font-size: 12px;
-                }
-  
-                button {
-                  font-size: 12px;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+}
