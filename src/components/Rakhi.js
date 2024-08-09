@@ -5,13 +5,10 @@ import Filter from "./Filter";
 import rakhi_img from "../assets/images/rakhi.webp";
 
 const Rakhi = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
   const [maxLength, setMaxLength] = useState(30); 
   const [filters, setFilters] = useState({
     minPrice: "",
@@ -28,6 +25,8 @@ const Rakhi = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     const fetchData = async () => {
       try {
         const res = await fetch('https://gemstore-backend.onrender.com/api/rakhi/all', {
@@ -43,6 +42,8 @@ const Rakhi = () => {
 
         const resData = await res.json();
         setData(resData);
+        setFilteredData(resData)
+        setIsLoading(false)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -105,7 +106,7 @@ const Rakhi = () => {
       maxPrice: filterCriteria.maxPrice,
       sortOrder: filterCriteria.sortOrder
     });
-    handleClose(); // Optionally close the filter panel
+    handleClose(); 
   };
 
   return (
@@ -130,6 +131,12 @@ const Rakhi = () => {
               </span>
             </button>
           </div>
+
+          {isLoading ? (
+            <div className="loading-container">
+              <p>Loading Rakhi products....</p>
+            </div>
+          ) : (
           <div className="products">
             {filteredData.map((res) => (
               <Link to={`/rakhi/product/${res._id}`} key={res._id} state={{ product: res }}>
@@ -143,6 +150,7 @@ const Rakhi = () => {
               </Link>
             ))}
           </div>
+          )}
         </div>
       </div>
     </>

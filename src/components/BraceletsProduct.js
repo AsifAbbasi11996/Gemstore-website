@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import "../assets/css/Product.css";
 import { Link, useLocation } from "react-router-dom";
 
-const BraceletsProduct = ({ updateCartCount }) => {
+const BraceletsProduct = () => {
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [maxLength, setMaxLength] = useState(30);
-    const [addedToCart, setAddedToCart] = useState(false);
-    const [showCartPopup, setShowCartPopup] = useState(false);
+    
 
     const { state } = useLocation();
     const product = state?.product;
@@ -17,7 +16,6 @@ const BraceletsProduct = ({ updateCartCount }) => {
     useEffect(() => {
         window.scrollTo(0, 0);
 
-        // Fetch related products
         const fetchRelatedProducts = async () => {
             try {
                 const response = await fetch("https://gemstore-backend.onrender.com/api/bracelets/all");
@@ -68,23 +66,7 @@ const BraceletsProduct = ({ updateCartCount }) => {
 
     if (!product) {
         return <p>Product not found</p>;
-    }
-
-
-
-    const handleAddToCart = () => {
-        if (addedToCart) {
-            setShowCartPopup(true);
-            return;
-        }
-
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const cartItem = { ...product, selectedImageIndex };
-        cart.push(cartItem);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartCount(cart.length);
-        setAddedToCart(true);
-    };
+    }   
 
     return (
         <>
@@ -161,18 +143,17 @@ const BraceletsProduct = ({ updateCartCount }) => {
                                         <div className="details">
                                             <p>{truncateText(p.Name, maxLength)}</p>
                                             <p>
+                                                {Array.from({ length: 5 }, (_, i) => (
+                                                    <i key={i} className="ri-star-s-fill"></i>
+                                                ))}
+                                            </p>
+                                            <p>
                                                 <span>₹ {p.SP} </span>
                                                 <span>
                                                     <del>₹ {p.Mrp}</del>
                                                 </span>
                                             </p>
-                                            <p>
-                                                <i className="ri-star-s-fill"></i>
-                                                <i className="ri-star-s-fill"></i>
-                                                <i className="ri-star-s-fill"></i>
-                                                <i className="ri-star-s-fill"></i>
-                                                <i className="ri-star-s-fill"></i>
-                                            </p>
+
                                             <Link to={`/addtocart/${product._id}`} state={{ productId: product._id }}>
                                                 <button>add to cart</button>
                                             </Link>

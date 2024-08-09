@@ -5,14 +5,11 @@ import Filter from "./Filter";
 import rudraksha_img from "../assets/images/slider_img3.webp";
 
 const Rudraksha = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [maxLength, setMaxLength] = useState(30); 
+  const [isLoading, setIsLoading] = useState(true)
+  const [maxLength, setMaxLength] = useState(30);
   const [filters, setFilters] = useState({
     minPrice: "",
     maxPrice: "",
@@ -28,6 +25,8 @@ const Rudraksha = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     const fetchData = async () => {
       try {
         const res = await fetch('https://gemstore-backend.onrender.com/api/rudraksha/all', {
@@ -43,6 +42,8 @@ const Rudraksha = () => {
 
         const resData = await res.json();
         setData(resData);
+        setFilteredData(resData)
+        setIsLoading(false)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -72,7 +73,7 @@ const Rudraksha = () => {
     if (filters.minPrice) {
       filtered = filtered.filter((item) => item.Mrp >= filters.minPrice);
     }
-    
+
     if (filters.maxPrice) {
       filtered = filtered.filter((item) => item.Mrp <= filters.maxPrice);
     }
@@ -105,7 +106,7 @@ const Rudraksha = () => {
       maxPrice: filterCriteria.maxPrice,
       sortOrder: filterCriteria.sortOrder
     });
-    handleClose(); // Optionally close the filter panel
+    handleClose();
   };
 
   return (
@@ -123,26 +124,33 @@ const Rudraksha = () => {
             </span>
           </button>
           <div className={`filter ${isOpen ? "active" : ""}`}>
-            <Filter onApplyFilters={handleApplyFilters}/>
+            <Filter onApplyFilters={handleApplyFilters} />
             <button className="closeBtn" onClick={handleClose}>
               <span>
                 <i className="ri-close-line"></i>
               </span>
             </button>
           </div>
-          <div className="products">
-            {filteredData.map((res) => (
-              <Link to={`/rudraksha/product/${res._id}`} state={{ product: res }} key={res._id}>
-                <div className="card">
-                  <img src={res.Images[0]} alt={res.Name} />
-                  <div className="details">
-                    <p className="name">{truncateText(res.Name, maxLength)}</p>
-                    <p><span className="sp">₹{res.SP}</span> <span className="mrp"> <del>₹{res.Mrp}</del> </span> </p>
+
+          {isLoading ? (
+            <div className="loading-container">
+              <p>Loading Rudraksha products....</p>
+            </div>
+          ) : (
+            <div className="products">
+              {filteredData.map((res) => (
+                <Link to={`/rudraksha/product/${res._id}`} state={{ product: res }} key={res._id}>
+                  <div className="card">
+                    <img src={res.Images[0]} alt={res.Name} />
+                    <div className="details">
+                      <p className="name">{truncateText(res.Name, maxLength)}</p>
+                      <p><span className="sp">₹{res.SP}</span> <span className="mrp"> <del>₹{res.Mrp}</del> </span> </p>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>

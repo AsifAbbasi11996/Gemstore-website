@@ -13,7 +13,6 @@ const Buynow = () => {
   const [emailError, setEmailError] = useState("");
   const navigate = useNavigate();
 
-  // List of API endpoints to search for the product
   const apiLinks = [
     'https://gemstore-backend.onrender.com/api/gemstone/all',
     'https://gemstore-backend.onrender.com/api/rudraksha/all',
@@ -29,23 +28,23 @@ const Buynow = () => {
           const requests = apiLinks.map(link => axios.get(link));
           const responses = await Promise.all(requests);
 
-          // Flatten the responses and find the product
+
           let foundProduct = null;
           for (const response of responses) {
             const products = response.data;
             foundProduct = products.find(p => p._id === productId);
-            if (foundProduct) break; // Stop searching if the product is found
+            if (foundProduct) break; 
           }
 
           if (foundProduct) {
             setProduct(foundProduct);
           } else {
             console.warn('Product not found');
-            // Handle the case where the product is not found
+            
           }
         } catch (error) {
           console.error('Error fetching product:', error);
-          // Handle the error appropriately
+          
         }
       }
     };
@@ -79,7 +78,6 @@ const Buynow = () => {
     // Pass the product and user details to the Address page
     navigate(`/address/${productId}`, { state: { product, phoneNumber, email } });
     console.log("Phone Number:", phoneNumber);
-    console.log("Email:", email);
   };
 
   if (!product) return <p>Loading...</p>;

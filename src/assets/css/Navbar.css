@@ -39,7 +39,7 @@
       text-decoration: none;
       color: white;
 
-      h1{
+      h1 {
         font-size: 24px;
         font-weight: 500;
       }
@@ -55,7 +55,7 @@
       color: #7a7a7a;
     }
 
-    a:hover .dropdowns {
+    .nav-item:hover .dropdowns {
       display: flex;
       gap: 2rem;
       background: rgb(226, 229, 243);
@@ -66,10 +66,11 @@
       z-index: 1000;
     }
 
-    a:hover .dropdowns2{
+    a:hover .dropdowns2 {
       left: 27%;
     }
-    a:hover .dropdowns3{
+
+    a:hover .dropdowns3 {
       left: 27%;
       height: 340px;
     }
@@ -78,72 +79,73 @@
       text-decoration: none;
       color: white;
       text-transform: uppercase;
+    }
 
-      i {
-        font-size: 20px;
-      }
+    i {
+      font-size: 20px;
+    }
 
-      .dropdowns {
-        display: none;
+    .dropdowns {
+      display: none;
 
-        .dropdown1,
-        .dropdown2,
-        .dropdown3 {
-          .head_text {
+      .dropdown1,
+      .dropdown2,
+      .dropdown3 {
+        .head_text {
+          text-transform: uppercase;
+          color: black;
+          border-bottom: 2px solid black;
+          padding-bottom: 5px;
+        }
+
+        ul {
+          height: 250px;
+          overflow-y: scroll;
+          margin: 20px 0;
+
+          li {
+            list-style-type: none;
             text-transform: uppercase;
             color: black;
-            border-bottom: 2px solid black;
-            padding-bottom: 5px;
-          }
+            margin: 10px 5px;
 
-          ul {
-            height: 250px;
-            overflow-y: scroll;
-            margin: 20px 0;
-
-            li {
-              list-style-type: none;
-              text-transform: uppercase;
+            a {
+              text-transform: none;
               color: black;
-              margin: 10px 5px;
-
-              a {
-                text-transform: none;
-                color: black;
-                font-size: 14px;
-              }
+              font-size: 14px;
             }
           }
         }
       }
+    }
 
-      .dropdowns3{
-        padding: 0 10px !important;
+    .dropdowns3 {
+      padding: 0 10px !important;
 
-        .dropdown1,
-        .dropdown2,
-        .dropdown3{
-          margin: 10px 0;
-        
+      .dropdown1,
+      .dropdown2,
+      .dropdown3 {
+        margin: 10px 0;
 
-          ul{
-            height: 320px;
-          }
-        }
 
         ul {
-          margin: 0 !important;
+          height: 320px;
         }
       }
+
+      ul {
+        margin: 0 !important;
+      }
     }
+
   }
 
   .user {
     gap: 1.5rem;
 
-    a{
+    a {
 
-      i:hover{
+      i:hover {
         color: #7a7a7a;
       }
     }
@@ -175,21 +177,21 @@
     outline: none;
   }
 
-  i{
+  i {
     color: white;
     font-size: 24px;
   }
 
   ul {
 
-    li{
+    li {
       list-style-type: none;
       color: white;
       padding: 5px 0;
       cursor: pointer;
     }
 
-    li:hover{
+    li:hover {
       text-decoration: underline;
     }
   }
@@ -207,9 +209,9 @@
       }
     }
 
-    .logo{
-      a{
-        h1{
+    .logo {
+      a {
+        h1 {
           font-size: 22px;
         }
       }
@@ -225,7 +227,7 @@
       background-color: #fff;
       padding: 20px 0 0 40px;
       width: 50%;
-      
+
 
       a {
         color: black;
@@ -242,15 +244,15 @@
       left: 0;
     }
 
-    .user{
+    .user {
       gap: 1rem;
     }
   }
 
-  .search-bar-container{
+  .search-bar-container {
     height: auto;
 
-    i{
+    i {
       font-size: 16px;
     }
   }

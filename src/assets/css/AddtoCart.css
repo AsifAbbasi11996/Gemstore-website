@@ -4,6 +4,7 @@
   h2 {
     text-align: center;
     margin: 20px auto;
+    font-weight: 500;
   }
 
   .empty-cart-message {

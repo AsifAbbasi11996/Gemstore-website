@@ -147,17 +147,15 @@ const TreesProduct = () => {
                                         <div className="details">
                                             <p>{truncateText(p.Name, maxLength)}</p>
                                             <p>
+                                                {Array.from({ length: 5 }, (_, i) => (
+                                                    <i key={i} className="ri-star-s-fill"></i>
+                                                ))}
+                                            </p>
+                                            <p>
                                                 <span>₹ {p.SP} </span>
                                                 <span>
                                                     <del>₹ {p.Mrp}</del>
                                                 </span>
-                                            </p>
-                                            <p>
-                                                <i className="ri-star-s-fill"></i>
-                                                <i className="ri-star-s-fill"></i>
-                                                <i className="ri-star-s-fill"></i>
-                                                <i className="ri-star-s-fill"></i>
-                                                <i className="ri-star-s-fill"></i>
                                             </p>
                                             <Link to={`/addtocart/${product._id}`} state={{ productId: product._id }}>
                                                 <button>add to cart</button>

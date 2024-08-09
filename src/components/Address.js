@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const Address = () => {
   const location = useLocation();
   const { productId } = location;
-  const { product, phoneNumber, email } = location.state || {};
+  const { product, phoneNumber} = location.state || {};
   
   const [otp, setOtp] = useState("");
   const [otpError, setOtpError] = useState("");
@@ -27,7 +27,7 @@ const Address = () => {
       return;
     }
     console.log("OTP:", otp);
-    navigate(`/address2/${productId}`, { state: { product, phoneNumber, email } });
+    navigate(`/address2/${productId}`, { state: { product, phoneNumber } });
   };
 
   return (
@@ -68,8 +68,7 @@ const Address = () => {
               </div>
 
               <div className="text_message">
-                <p>A text message with an OTP has been sent to</p>
-                <p className="number">+9165464864</p>
+                <p>A text message with an OTP has been sent to <span className="number">+{phoneNumber}</span> </p>
               </div>
 
               <div className="otp_input">

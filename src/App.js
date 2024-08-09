@@ -41,7 +41,7 @@ function App() {
         <Route path="/rakhi" element={<Rakhi />} />
         <Route path="/rakhi/product/:id" element={<RakhiProduct />} />
         <Route path="/gifts" element={<Gifts />} />
-        <Route path="/addtocart/:id" element={<AddtoCart />} />
+        <Route path="/addtocart/:id" element={<AddtoCart/>} />
         <Route path="/buynow/:id" element={<Buynow />} />
         <Route path="/address/:id" element={<Address />} />
         <Route path="/address2/:id" element={<Address2 />} />

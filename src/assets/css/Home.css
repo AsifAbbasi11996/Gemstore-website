@@ -106,6 +106,7 @@
 
         .border:hover {
           transform: scale(1.07);
+          box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.356);
         }
       }
     }
@@ -138,10 +139,12 @@
         color: #000;
 
         .card {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
           text-align: center;
-          border-radius: 5px;
           padding: 5px;
-          box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.356);
+          border: 1px solid rgb(211 200 200);
           transition: transform 0.2s;
 
 
@@ -149,27 +152,29 @@
             width: 240px;
             height: 210px;
             object-fit: cover;
-            border-radius: 10px;
           }
 
+          .details {
+            max-width: 230px;
+            height: 100px;
 
-          p {
-            text-align: center;
-            text-transform: uppercase;
-            margin-top: 5px;
-            font-size: 14px;
+            p {
+              text-transform: uppercase;
+              margin-top: 5px;
+              font-size: 14px;
 
-            del {
-              margin-left: 5px;
-              font-size: 12px;
-              color: #242424;
+              del {
+                margin-left: 5px;
+                font-size: 12px;
+                color: #242424;
+              }
             }
           }
         }
 
         .card:hover {
+          box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.356);
           transform: scale(1.08);
-
         }
       }
     }
@@ -334,25 +339,24 @@
         gap: 1rem;
         justify-content: normal;
 
-
         a {
           .card {
-            display: flex;
-            align-items: center;
             column-gap: 1rem;
             transition: none !important;
+
 
             img {
               width: 170px;
               height: 150px;
             }
 
-            button {
-              font-size: 14px;
+            .details {
+              max-width: 160px;
+
             }
           }
 
-          .card:hover{
+          .card:hover {
             transform: none !important;
           }
         }
@@ -400,6 +404,24 @@
   }
 }
 
+@media only screen and (max-width:425px) {
+  .home_container {
+
+    .content2,
+    .content3 {
+      .cards {
+        a {
+
+          .card {
+            flex-direction: row;
+            width: 350px;
+          }
+        }
+      }
+    }
+  }
+}
+
 @media only screen and (max-width:375px) {
   .home_container {
 
@@ -429,6 +451,8 @@
 
           .card {
             margin: 0 10px;
+            width: 300px;
+
 
             img {
               width: 150px !important;

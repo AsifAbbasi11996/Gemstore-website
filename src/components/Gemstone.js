@@ -5,13 +5,10 @@ import Filter from "./Filter";
 import gemstone_img from "../assets/images/gemstone_img.webp";
 
 const Gemstone = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
   const [maxLength, setMaxLength] = useState(30);
   const [filters, setFilters] = useState({
     minPrice: "",
@@ -21,13 +18,24 @@ const Gemstone = () => {
 
   const handleClick = () => {
     setIsOpen(!isOpen);
+    if (!isOpen) {
+      document.querySelector('.filter').classList.add('active');
+    }
   };
+
 
   const handleClose = () => {
-    setIsOpen(false);
+    document.querySelector('.filter').classList.remove('active');
+
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 300);
   };
 
+
   useEffect(() => {
+    window.scrollTo(0, 0);
+    
     const fetchData = async () => {
       try {
         const res = await fetch('https://gemstore-backend.onrender.com/api/gemstone/all', {
@@ -43,7 +51,8 @@ const Gemstone = () => {
 
         const resData = await res.json();
         setData(resData);
-        setFilteredData(resData); // Set initial filtered data
+        setFilteredData(resData);
+        setIsLoading(false)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -106,7 +115,7 @@ const Gemstone = () => {
       maxPrice: filterCriteria.maxPrice,
       sortOrder: filterCriteria.sortOrder
     });
-    handleClose(); // Optionally close the filter panel
+    handleClose();
   };
 
   return (
@@ -132,19 +141,25 @@ const Gemstone = () => {
             </button>
           </div>
 
-          <div className="products">
-            {filteredData.map((res) => (
-              <Link to={`/gemstone/product/${res._id}`} key={res._id} state={{ product: res }}>
-                <div className="card">
-                  <img src={res.Images[0]} alt={res.Name} />
-                  <div className="details">
-                    <p className="name">{truncateText(res.Name, maxLength)}</p>
-                    <p><span className="sp">₹{res.SP}</span> <span className="mrp"> <del>₹{res.Mrp}</del> </span> </p>
+          {isLoading ? (
+            <div className="loading-container">
+              <p>Loading Gemstones products....</p>
+            </div>
+          ) : (
+            <div className="products">
+              {filteredData.map((res) => (
+                <Link to={`/gemstone/product/${res._id}`} key={res._id} state={{ product: res }}>
+                  <div className="card">
+                    <img src={res.Images[0]} alt={res.Name} />
+                    <div className="details">
+                      <p className="name">{truncateText(res.Name, maxLength)}</p>
+                      <p><span className="sp">₹{res.SP}</span> <span className="mrp"> <del>₹{res.Mrp}</del> </span> </p>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>

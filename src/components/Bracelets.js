@@ -5,13 +5,10 @@ import Filter from "./Filter";
 import bracelets_img from "../assets/images/bracelets_img.webp";
 
 const Bracelets = () => {
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
-
     const [isOpen, setIsOpen] = useState(false);
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true)
     const [maxLength, setMaxLength] = useState(30);
     const [filters, setFilters] = useState({
         minPrice: "",
@@ -28,6 +25,8 @@ const Bracelets = () => {
     };
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+        
         const fetchData = async () => {
             try {
                 const res = await fetch('https://gemstore-backend.onrender.com/api/bracelets/all', {
@@ -43,6 +42,8 @@ const Bracelets = () => {
 
                 const resData = await res.json();
                 setData(resData);
+                setFilteredData(resData)
+                setIsLoading(false)
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -54,7 +55,7 @@ const Bracelets = () => {
             if (window.innerWidth > 1023) {
                 setMaxLength(25);
             } else {
-                setMaxLength(20);
+                setMaxLength(18);
             }
         };
 
@@ -105,7 +106,7 @@ const Bracelets = () => {
           maxPrice: filterCriteria.maxPrice,
           sortOrder: filterCriteria.sortOrder
         });
-        handleClose(); // Optionally close the filter panel
+        handleClose(); 
       };
 
     return (
@@ -130,6 +131,12 @@ const Bracelets = () => {
                             </span>
                         </button>
                     </div>
+
+                    { isLoading ? (
+                        <div className="loading-container">
+                            <p>Loading Bracelets products....</p>
+                            </div>
+                    ) : (
                     <div className="products">
                         {filteredData.map((res) => (
                             <Link to={`/bracelets/product/${res._id}`} key={res._id} state={{ product: res }}>
@@ -143,6 +150,7 @@ const Bracelets = () => {
                             </Link>
                         ))}
                     </div>
+                    )}
                 </div>
             </div>
         </>

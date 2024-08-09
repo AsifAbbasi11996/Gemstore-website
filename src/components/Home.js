@@ -19,7 +19,8 @@ import icons_gems from "../assets/images/icons_gems.webp";
 const Home = () => {
   const [rudrakshaData, setRudrakshaData] = useState([]);
   const [braceletData, setBraceletData] = useState([]);
-  const [maxLength, setMaxLength] = useState(30); 
+  const [maxLength, setMaxLength] = useState(30);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -59,8 +60,10 @@ const Home = () => {
 
         const resData = await res.json();
         setRudrakshaData(resData);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching Rudraksha data:', error);
+        
       }
     };
 
@@ -74,7 +77,7 @@ const Home = () => {
       }
     };
 
-    handleResize(); 
+    handleResize();
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -85,7 +88,7 @@ const Home = () => {
   const truncateText = (text, maxLength) => {
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
   };
-  
+
   useEffect(() => {
     const fetchBraceletData = async () => {
       try {
@@ -102,13 +105,15 @@ const Home = () => {
 
         const resData = await res.json();
         setBraceletData(resData);
+        setIsLoading(false); // Update loading state after successful fetch
       } catch (error) {
         console.error('Error fetching Bracelet data:', error);
+        // Handle error appropriately (e.g., display an error message)
       }
     };
 
     fetchBraceletData();
-    
+
     const handleResize = () => {
       if (window.innerWidth > 1023) {
         setMaxLength(30);
@@ -117,7 +122,7 @@ const Home = () => {
       }
     };
 
-    handleResize(); 
+    handleResize();
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -189,28 +194,34 @@ const Home = () => {
 
         <div className="content2">
           <h1>100% NATURAL HIMALAYAN RUDRAKSHA</h1>
-          <div className="cards">
-            {rudrakshaData.map((item, index) => (
-              <Link to={`/rudraksha/product/${item._id}`} key={item._id} state={{product : item}}>
-                <div className="card">
-                  <div className="img">
-                    <img src={item.Images[0]} alt={item.Name} />
+          {isLoading ? (
+            <div className="loading-container">
+              <p>Loading Rudraksha products...</p>
+            </div>
+          ) : (
+            <div className="cards">
+              {rudrakshaData.map((item) => (
+                <Link to={`/rudraksha/product/${item._id}`} key={item._id} state={{ product: item }}>
+                  <div className="card">
+                    <div className="img">
+                      <img src={item.Images[0]} alt={item.Name} />
+                    </div>
+                    <div className="details">
+                      <p>{truncateText(item.Name, maxLength)}</p>
+                      <p>
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <i key={i} className="ri-star-s-fill"></i>
+                        ))}
+                      </p>
+                      <p>
+                        ₹ {item.SP} <del>₹ {item.Mrp}</del>
+                      </p>
+                    </div>
                   </div>
-                  <div className="details">
-                  <p>{truncateText(item.Name, maxLength)}</p>
-                    <p>
-                       ₹ {item.SP} <del>₹ {item.Mrp}</del>
-                    </p>
-                    <p>
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <i key={i} className="ri-star-s-fill"></i>
-                      ))}
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          )}
           <Link to='/rudraksha'>
             <button>VIEW ALL</button>
           </Link>
@@ -225,29 +236,35 @@ const Home = () => {
 
         <div className="content3">
           <h1>Bracelets</h1>
-          <div className="cards">
-            {braceletData.map((item, index) => (
-              <Link to={`/bracelets/product/${item._id}`} key={item._id} state={{ product: item }}>
-                <div className="card">
-                  <div className="img">
-                    <img src={item.Images[0]} alt={item.Name} />
+          {isLoading ? (
+            <div className="loading-container">
+              <p>Loading Bracelets products...</p>
+            </div>
+          ) : (
+            <div className="cards">
+              {braceletData.map((item) => (
+                <Link to={`/bracelets/product/${item._id}`} key={item._id} state={{ product: item }}>
+                  <div className="card">
+                    <div className="img">
+                      <img src={item.Images[0]} alt={item.Name} />
+                    </div>
+
+                    <div className="details">
+                      <p>{truncateText(item.Name, maxLength)}</p>
+                      <p>
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <i key={i} className="ri-star-s-fill"></i>
+                        ))}
+                      </p>
+                      <p>
+                        ₹ {item.SP} <del>₹ {item.Mrp}</del>
+                      </p>
+                    </div>
                   </div>
-                  <div className="details">
-                  <p>{truncateText(item.Name, maxLength)}</p>
-                    <p>
-                      ₹ {item.SP} <del>₹ {item.Mrp}</del>
-                    </p>
-                    <p>
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <i key={i} className="ri-star-s-fill"></i>
-                      ))}
-                    </p>
-                   
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          )}
           <Link to='/bracelets'>
             <button>VIEW ALL</button>
           </Link>

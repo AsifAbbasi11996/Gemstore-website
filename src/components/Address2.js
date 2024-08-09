@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const Address2 = () => {
     const location = useLocation();
     const { state } = location;
-    const { product, phoneNumber, email } = state || {};
+    const { product, phoneNumber} = state || {};
     const navigate = useNavigate();
 
     const handleClick = () => {
